@@ -751,7 +751,27 @@ The target densities in Table \ref{tab:dataset_desc} are all well below 1\%. Ama
 \subsection{Implementation Details}
 Experiments were run in Google Colab on a CPU High-RAM runtime (typically Intel Xeon-class host CPUs with approximately 25~GB RAM available to the notebook). Software: Python~3.x with NumPy and Scikit-learn as used in Colab at the time of the experiments. All folds used a fixed random seed of $42$ for split generation unless otherwise noted, and each method was trained for $E=20$ iterations under the shared hyperparameter setting in Section~\ref{sec:params}.
 
+\subsection{Runtime comparison}\label{sec:runtime}
+Table~\ref{tab:runtime} reports wall-clock time for a single $CX_1$ run (Book$\to$Music, 20\% target training, $E=20$ source and target, seed $42$) under the matched protocol. Absolute seconds depend on the host CPU; the useful signal is the relative cost. Rating-wise SGD methods (MF, MFB, DMF) dominate runtime: MFB is only modestly slower than MF ($\approx 118$\,s vs.\ $\approx 105$\,s) despite the extra bias parameters, while DMF is the slowest ($\approx 147$\,s) because of the element-wise product and final-layer updates. NMF's multiplicative updates and truncated-SVD warm-start finish much faster on this matrix size ($\approx 5.5$\,s and $\approx 14.9$\,s) because they are dominated by dense/sparse linear algebra rather than Python-level loops over ratings. Combined with Table~\ref{tab:method_compare}, MFB therefore offers the best accuracy--cost trade-off among the SGD family: near-MF cost with substantially lower error in the main tables.
 
+\begin{table}[htbp]
+\centering
+\caption{Wall-clock runtime on $CX_1$ (one fold, TR\,$=$\,20\%, $E=20$).}
+\label{tab:runtime}
+\renewcommand{\arraystretch}{1.15}
+\small
+\begin{tabular}{lccc}
+\toprule
+\textbf{Method} & \textbf{Total (s)} & \textbf{s / epoch budget} & \textbf{Notes} \\
+\midrule
+MF\_CDRS & $105.4$ & $5.27$ & Sparse SGD \\
+MFB\_CDRS & $118.2$ & $5.91$ & Sparse SGD $+$ biases \\
+NMF\_CDRS & $5.5$ & $0.27$ & Multiplicative updates \\
+SVD\_CDRS & $14.9$ & $0.74$ & Truncated SVD $+$ target SGD \\
+DMF\_CDRS & $147.3$ & $7.36$ & GMF-style SGD \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Experiment Parameter Settings and Protocols}\label{sec:params}
 We utilized a rigorous 5-fold cross-validation methodology that divided the overall database into 5 sets that were completely independent from one another; this was to allow for an unbiased and reliable evaluation of the performance of our models. For each fold, we randomly selected 4 of the 5 subsets as the training data and utilized the 1 remaining subset as the test data. To provide a measure of statistical reliability to our results, we reported the average performance metrics for all 5 folds along with a 95\% Confidence Interval.

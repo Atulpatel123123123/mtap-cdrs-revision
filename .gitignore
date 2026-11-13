@@ -8,3 +8,4 @@ cache_*.npz
 .DS_Store
 *.bkp
 src/_mfb_cell15.py
+src/_cell*.py

@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "cat_a": "Book",
+    "cat_b": "Music",
+    "source": "Book",
+    "target": "Music",
+    "n_users": 650,
+    "n_items_s": 117509,
+    "n_items_t": 41200,
+    "n_ratings_t": 96399,
+    "density_t": 0.003599663928304705,
+    "mean_rating_t": 4.327631337807793,
+    "cx": "CX1"
+  },
+  "rows": [
+    {
+      "method": "MF_CDRS",
+      "seconds": 105.41545989993028,
+      "sec_per_epoch_pair": 5.2707729949965145,
+      "mae": 3.0625727990731964,
+      "rmse": 3.614460566625907
+    },
+    {
+      "method": "MFB_CDRS",
+      "seconds": 118.21047549997456,
+      "sec_per_epoch_pair": 5.910523774998728,
+      "mae": 0.6930280514968432,
+      "rmse": 0.9057114155757628
+    },
+    {
+      "method": "NMF_CDRS",
+      "seconds": 5.4702761000953615,
+      "sec_per_epoch_pair": 0.2735138050047681,
+      "mae": 4.329546006593919,
+      "rmse": 4.435025234825872
+    },
+    {
+      "method": "SVD_CDRS",
+      "seconds": 14.89204950002022,
+      "sec_per_epoch_pair": 0.7446024750010111,
+      "mae": 4.002874672164084,
+      "rmse": 4.206722557953519
+    },
+    {
+      "method": "DMF_CDRS",
+      "seconds": 147.25675519998185,
+      "sec_per_epoch_pair": 7.362837759999093,
+      "mae": 0.7588335522941261,
+      "rmse": 0.9618552508721029
+    }
+  ],
+  "epochs": 20
+}
