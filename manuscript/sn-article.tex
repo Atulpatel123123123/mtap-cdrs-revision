@@ -803,7 +803,7 @@ Here, $r_T$ represents the total number of ratings we predict in the target doma
 In addition to pointwise error, we report graded $\mathrm{NDCG}@K$ and binary $\mathrm{Recall}@K$ ($K\in\{5,10\}$) on $CX_1$ by ranking each user's held-out rated items according to predicted score (relevance $=$ true rating; Recall treats rating $\ge 4$ as relevant). This is a rating-ranking protocol among observed test items rather than a full-catalogue top-$N$ task, and is intended as a complementary check that MAE/RMSE improvements also appear in rank order.
 
 \subsection{Result Analysis and Discussion}
-The comprehensive experimental results are detailed in Tables \ref{tab:mae_cx1}--\ref{tab:mae_cx6_2} and visualized in Fig. \ref{fig:rmse_all} and Fig. \ref{fig:mae_all}. The comparative analysis reveals distinct performance hierarchies among the decomposition approaches, providing critical insights into their intrinsic transfer capabilities.
+The comprehensive experimental results are detailed in Tables \ref{tab:mae_cx1}--\ref{tab:rmse_cx6} and visualized in Fig. \ref{fig:rmse_all} and Fig. \ref{fig:mae_all}. The comparative analysis reveals distinct performance hierarchies among the decomposition approaches, providing critical insights into their intrinsic transfer capabilities.
 
 % Figure 7 RMSE 
 \begin{figure}[ht]
@@ -1201,7 +1201,7 @@ MFB\_CDRS & $0.9185 \pm 0.0094$ & $0.9056 \pm 0.0083$ & $0.8994 \pm 0.0095$ & $0
 \begin{table}[ht]
 \centering
 \caption{MAE performance on the $CX_6$ dataset with four training set size}
-\label{tab:mae_cx6_1}
+\label{tab:mae_cx6}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
 \toprule
@@ -1220,8 +1220,8 @@ MFB\_CDRS & $0.7947 \pm 0.0021$ & $0.7630 \pm 0.0024$ & $0.7476 \pm 0.0019$ & $0
 % Table 13: RMSE CX6 (Set 2)
 \begin{table}[ht]
 \centering
-\caption{RMSE performance on the $CX_6$ dataset with four training set size }
-\label{tab:mae_cx6_2}
+\caption{RMSE performance on the $CX_6$ dataset with four training set size}
+\label{tab:rmse_cx6}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
 \toprule
