@@ -811,7 +811,7 @@ The comprehensive experimental results are detailed in Tables \ref{tab:mae_cx1}-
 % Figure 7 RMSE 
 \begin{figure}[ht]
     \centering \includegraphics[width=0.8\textwidth]{Fig.7.png}
-    \caption{RMSE Performance Across All Training Sizes (CX1-CX6).}
+    \caption{RMSE of the five compared decompositions across training ratios 20\%--80\% on $CX_1$--$CX_6$ (lower is better).}
     \label{fig:rmse_all}
 \end{figure}
 
@@ -819,7 +819,7 @@ The comprehensive experimental results are detailed in Tables \ref{tab:mae_cx1}-
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.9\textwidth]{MAE(CX1-CX6).png}
-    \caption{MAE Performance Across All Training Sizes for all datasets (CX1-CX6).}
+    \caption{MAE of the five compared decompositions across training ratios 20\%--80\% on $CX_1$--$CX_6$ (lower is better).}
     \label{fig:mae_all}
 \end{figure}
 
@@ -847,6 +847,43 @@ A natural question is whether MFB's gains come from (i)~having user/item bias pa
 MF (no bias parameters) & $3.0626$ \\
 MFB, factor transfer only (local biases) & $0.6922$ \\
 MFB, full (factor $+$ bias transfer) & $0.6930$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Cold-start user slices and rating-bin errors}\label{sec:coldstart}
+To address requests for finer-grained evaluation beyond overall MAE, Table~\ref{tab:coldstart} splits $CX_1$ test users (TR\,$=$\,20\%) into cold / mid / warm terciles by the number of target training ratings (cut-offs 7 and 15). MFB remains best in every slice (cold MAE $0.689$ vs.\ DMF $0.766$ and $\mu$ $0.777$), so the comparative ranking is not driven only by warm users. Table~\ref{tab:rating_bins} further breaks test errors by true rating value. Absolute errors are largest on rare low ratings ($1$--$2$), where MFB still improves over $\mu$ and DMF; on the dominant high ratings ($4$--$5$) all methods are closer, and MFB retains a small edge. These component views support the same comparative conclusion as the aggregate tables without introducing a new model.
+
+\begin{table}[htbp]
+\centering
+\caption{Per-user MAE on $CX_1$ by target-training activity (TR\,$=$\,20\%).}
+\label{tab:coldstart}
+\renewcommand{\arraystretch}{1.15}
+\small
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Slice} & \textbf{Users} & $\mu$ & MFB & DMF \\
+\midrule
+Cold ($\le 7$ train ratings) & 227 & $0.777$ & $0.689$ & $0.766$ \\
+Mid & 220 & $0.771$ & $0.678$ & $0.761$ \\
+Warm ($> 15$ train ratings) & 203 & $0.808$ & $0.687$ & $0.804$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Component MAE on $CX_1$ test ratings by true rating bin (TR\,$=$\,20\%).}
+\label{tab:rating_bins}
+\renewcommand{\arraystretch}{1.15}
+\small
+\begin{tabular}{lcccc}
+\toprule
+\textbf{True rating} & \textbf{$n$} & $\mu$ & MFB & DMF \\
+\midrule
+Low ($1$--$2$) & 1075 & $2.783$ & $2.332$ & $2.824$ \\
+Mid ($3$) & 1819 & $1.324$ & $1.112$ & $1.365$ \\
+High ($4$--$5$) & 15839 & $0.558$ & $0.518$ & $0.539$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1205,19 +1242,11 @@ MFB\_CDRS & $1.0291 \pm 0.0028$ & $0.9992 \pm 0.0034$ & $0.9841 \pm 0.0031$ & $0
 
 \section{Conclusions and Future Works}
 
-This research addresses a knowledge gap in CDRS through a comparative study of five basic decomposition methods---MF, MFB, NMF, DMF, and SVD---under controlled levels of sparseness. The contribution is not a claim of being the first bias-aware or transfer-based factorization study, but a controlled sparsity sweep that empirically demonstrates that bias-aware transfer (MFB) is especially robust in sparse targets and that yields practical guidance for selecting foundational methods. In contrast to studies that emphasize complex CDRS architectures, this work focuses on the intrinsic transfer behaviour of common decomposition components across domain pairs.
+This paper is a comparative study of five foundational decompositions---MF, MFB, NMF, DMF, and SVD---under matched cross-domain transfer protocols and controlled target sparsity. It does not propose a new CDRS architecture. Across six Amazon category pairs, bias-aware factorization (MFB) is consistently the strongest of the compared methods on MAE/RMSE, and it also leads on the $CX_1$ ranking and cold-start probes. The ablation indicates that modelling user/item biases is the main driver of that advantage under sparse targets.
 
-We showed empirically that matrix factorization with bias (MFB\_CDRS) has the highest degree of reliability and performs best, with respect to accuracy, on the sparse Amazon targets studied here. The explicit model of the user-item bias terms serve as a reliable, domain invariant signal, and thus improves the quality of predictions significantly when either there is little to no noise in the interactions between users and items, or they are insufficient. Because all six target domains already lie below 1\% density, we do not claim an established crossover; rather, we hypothesize that MFB\_CDRS is preferable in very sparse targets, while standard MF\_CDRS may become more competitive as density increases---a hypothesis for denser domains beyond the present evidence.
+Limitations follow from the comparative design: Amazon explicit ratings only; user-overlap only; a shared $d$, $\lambda$, $\eta$, $\gamma$, and $E=20$ budget; and a shallow DMF instantiation. Because all six targets already lie below 1\% density, we treat any density ``crossover'' between MFB and MF as a hypothesis for denser domains rather than an established rule. Under the matched budget, weaker NMF/DMF scores should not be read as intrinsic inferiority of all non-linear methods.
 
-Standard linear matrix factorization and singular value decomposition perform better when the target domain has more interaction data. Under our matched hyperparameters and 20-iteration budget, NMF\_CDRS and DMF\_CDRS showed weaker transfer than MFB\_CDRS; this should be interpreted cautiously, as the shared protocol may under-train those methods. Therefore, the contributions of this research are primarily to clarify comparative behaviour of these decomposition mechanisms under a controlled setting rather than to develop a new architecture.
-
-Building on the insights developed in this research, several areas of future research appear promising:
-
-\begin{itemize}
-    \item[-] Combining GNNs with the stable bias-transfer model, building on self-supervised and hypergraph representation-learning directions~\cite{shu2024self}, to learn structure-aware user/item factors while retaining explicit bias transfer.
-    \item[-] Expanding the framework for use with non-overlapping data sets through the incorporation of textual features and inference of latent biases using Large Language Models (LLMs).
-    \item[-]To facilitate secure, large-scale real-world deployments of the system, developing methods for cross-domain transfer that maintain user privacy, including federated matrix factorization.
-\end{itemize}
+Future comparative and systems work may (i)~pair bias-aware transfer with GNN encoders~\cite{shu2024self}, (ii)~extend the same protocol to item-overlap and non-overlap settings (e.g., with text or LLM-derived features), and (iii)~study privacy-preserving variants such as federated matrix factorization.
 
 
 
