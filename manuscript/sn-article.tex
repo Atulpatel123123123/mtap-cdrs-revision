@@ -802,6 +802,31 @@ As for non-linear and constrained methods, DMF\_CDRS, employing a neural archite
 
 Overall, the above analysis unambiguously establishes that approaches that explicitly model and transfer latent user-item biases (MFB\_CDRS) provide the best means for solving the problem of cross-domain recommendations, and that these models significantly outperform both complex neural networks and constrained additive models in sparse settings.
 
+\subsection{Global-mean ($\mu$) baseline}
+Because Amazon ratings are strongly skewed toward high scores (overall mean $\approx 4.18$ on the $1$--$5$ scale in our parsed dump), a trivial predictor that always outputs the training-fold mean is a necessary reference. Table~\ref{tab:mu_baseline} reports this $\mu$-only baseline under the same 5-fold protocol (seed $42$) and training ratios as the decomposition methods. At 20\% target training, $\mu$ yields MAE in the range $0.78$--$0.91$ across the six pairs. MFB\_CDRS remains clearly better than $\mu$ on every pair (e.g., $CX_2$: $0.6612$ vs.\ $0.7888$; $CX_6$: $0.7947$ vs.\ $0.9128$), so MFB's advantage is not explained by mean prediction alone. MF, SVD, and NMF remain far worse than $\mu$, which further indicates that those transfers fail to exploit even the rating mean under the matched sparse protocol.
+
+\begin{table}[htbp]
+\centering
+\caption{Global-mean ($\mu$-only) baseline MAE/RMSE (mean $\pm$ 95\% CI) on target domains.}
+\label{tab:mu_baseline}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{3pt}
+\small
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Pair} & \textbf{Target} & \textbf{TR 20\% MAE} & \textbf{TR 20\% RMSE} & \textbf{TR 80\% MAE} & \textbf{TR 80\% RMSE} \\
+\midrule
+Book--Music & Book$^{\dagger}$ & $0.7796\pm0.0003$ & $0.9635\pm0.0027$ & $0.7795\pm0.0007$ & $0.9635\pm0.0027$ \\
+$CX_2$ (DVD$\to$Book) & Book & $0.7888\pm0.0016$ & $0.9778\pm0.0018$ & $0.7887\pm0.0015$ & $0.9778\pm0.0018$ \\
+$CX_3$ (Video$\to$Book) & Book & $0.7876\pm0.0027$ & $0.9775\pm0.0053$ & $0.7884\pm0.0031$ & $0.9775\pm0.0052$ \\
+$CX_4$ (DVD$\to$Music) & Music & $0.7892\pm0.0035$ & $1.0001\pm0.0067$ & $0.7887\pm0.0040$ & $1.0001\pm0.0067$ \\
+$CX_5$ (Video$\to$Music) & Music & $0.7826\pm0.0040$ & $0.9935\pm0.0061$ & $0.7845\pm0.0033$ & $0.9934\pm0.0061$ \\
+$CX_6$ (DVD$\to$Video) & Video & $0.9128\pm0.0017$ & $1.1678\pm0.0033$ & $0.9124\pm0.0015$ & $1.1677\pm0.0033$ \\
+\bottomrule
+\end{tabular}\\[0.3em]
+\footnotesize{$^{\dagger}$On this re-parse, Music was denser than Book among overlapping users, so the $\mu$ baseline is reported on Book as the sparse target; $CX_2$--$CX_6$ match Table~\ref{tab:dataset_desc}.}
+\end{table}
+
 \subsection{Statistical significance}
 To support ranking claims beyond overlapping confidence intervals, we applied paired tests on the five fold-level MAE values using the same notebook folds (seed $42$). Table~\ref{tab:sig_cx1} reports paired $t$-tests on $CX_1$ (Book$\to$Music) at 20\% target training, comparing MFB\_CDRS with each alternative. All paired $t$-tests are significant at $p<0.001$. Exact Wilcoxon signed-rank $p$-values equal $0.0625$ with $n=5$ when MFB wins every fold (the minimum attainable two-sided exact $p$ for this sample size); the directional consistency across folds nevertheless supports the ranking. The same pattern holds at 80\% training for MFB vs.\ DMF on $CX_1$ ($t=-44.77$, $p=1.5\times 10^{-6}$).
 

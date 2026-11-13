@@ -12,22 +12,17 @@ from typing import Dict, List, Optional, Tuple
 import pandas as pd
 
 SNAP_URL = "https://snap.stanford.edu/data/bigdata/amazon/amazon-meta.txt.gz"
-CATEGORY_PAIRS = [
-    ("Book", "Music"),
-    ("DVD", "Book"),
-    ("Video", "Book"),
-    ("DVD", "Music"),
-    ("Video", "Music"),
-    ("DVD", "Video"),
+# Fixed source/target as in the manuscript dataset table (not re-ranked by density).
+PAPER_SPLITS = [
+    ("CX1", "Book", "Music"),
+    ("CX2", "DVD", "Book"),
+    ("CX3", "Video", "Book"),
+    ("CX4", "DVD", "Music"),
+    ("CX5", "Video", "Music"),
+    ("CX6", "DVD", "Video"),
 ]
-PAPER_MAP = {
-    "Book->Music": "CX1",
-    "DVD->Book": "CX2",
-    "Video->Book": "CX3",
-    "DVD->Music": "CX4",
-    "Video->Music": "CX5",
-    "DVD->Video": "CX6",
-}
+CATEGORY_PAIRS = [(s, t) for _, s, t in PAPER_SPLITS]
+PAPER_MAP = {f"{s}->{t}": cx for cx, s, t in PAPER_SPLITS}
 
 
 def ensure_amazon_meta(preferred: Optional[str] = None) -> str:
@@ -156,7 +151,12 @@ def parse_amazon_meta(file_path: str) -> pd.DataFrame:
 
 
 def build_pair_matrices(
-    df: pd.DataFrame, cat_a: str, cat_b: str, rating_threshold: int = 30
+    df: pd.DataFrame,
+    cat_a: str,
+    cat_b: str,
+    rating_threshold: int = 30,
+    source_group: Optional[str] = None,
+    target_group: Optional[str] = None,
 ) -> Tuple[pd.DataFrame, pd.DataFrame, Dict]:
     user_category_counts = df.groupby(["Customerid", "Group"]).size().reset_index(name="num_ratings")
     filtered_users = user_category_counts[user_category_counts["num_ratings"] >= rating_threshold]
@@ -179,8 +179,9 @@ def build_pair_matrices(
     domain_stats["density_level"] = domain_stats["num_ratings"] / (
         domain_stats["num_users"] * domain_stats["num_items"]
     )
-    source_group = domain_stats.nlargest(1, "density_level")["Group"].values[0]
-    target_group = domain_stats.nsmallest(1, "density_level")["Group"].values[0]
+    if source_group is None or target_group is None:
+        source_group = domain_stats.nlargest(1, "density_level")["Group"].values[0]
+        target_group = domain_stats.nsmallest(1, "density_level")["Group"].values[0]
 
     source_matrix = filtered_reviews[filtered_reviews["Group"] == source_group]
     target_matrix = filtered_reviews[filtered_reviews["Group"] == target_group]

@@ -8,8 +8,8 @@ import numpy as np
 from sklearn.utils import shuffle
 
 from .amazon_meta import (
-    CATEGORY_PAIRS,
     PAPER_MAP,
+    PAPER_SPLITS,
     build_pair_matrices,
     ensure_amazon_meta,
     parse_amazon_meta,
@@ -101,11 +101,19 @@ def main(argv=None):
     df = df.drop_duplicates(subset=["Customerid", "ASIN", "Group", "Rating"])
 
     pair_data = {}
-    for a, b in CATEGORY_PAIRS:
-        _S, T, meta = build_pair_matrices(df, a, b, args.threshold)
+    for cx, source, target in PAPER_SPLITS:
+        _S, T, meta = build_pair_matrices(
+            df,
+            source,
+            target,
+            args.threshold,
+            source_group=source,
+            target_group=target,
+        )
         key = f"{meta['source']}->{meta['target']}"
+        meta["cx"] = cx
         pair_data[key] = {"T": T, "meta": meta}
-        print(key, meta)
+        print(cx, key, meta)
 
     all_results = {}
     for key, pack in pair_data.items():
