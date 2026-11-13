@@ -1,22 +1,21 @@
-# MTAP CDRS Revision Experiments
+﻿# MTAP CDRS Revision Experiments
 
-Code for MTAP major-revision extras (global-mean μ baseline, fold stats helpers).
+Code + figures + manuscript sources for MTAP major revision.
 
 ## Colab (recommended)
+Open: https://colab.research.google.com/github/Atulpatel123123123/mtap-cdrs-revision/blob/main/colab_run.ipynb
 
-1. Open [`colab_run.ipynb`](colab_run.ipynb) in Google Colab  
-   or use:
-   `https://colab.research.google.com/github/Atulpatel123123123/mtap-cdrs-revision/blob/main/colab_run.ipynb`
-2. Run all cells.
-3. Copy the printed block (`COPY EVERYTHING...` → `END_OF_OUTPUT`) and paste into Cursor.
+1. Run all
+2. Copy output block into Cursor
 
-When code is updated on GitHub, re-run the notebook (it `git pull`s latest). You only need the **output**.
+Repo updates ke baad Colab mein dubara Run all (git pull automatic).
 
-## Local
+## Layout
+- `colab_run.ipynb` / `src/` — μ-baseline runner
+- `notebooks/` — comparative experiment notebooks
+- `figures/` — root figures/drawio
+- `manuscript/` — Overleaf LaTeX sources + paper figures
+- `paper-assets/` — extra manuscript figures/assets
+- `docs/` — letters/pdfs/zip
 
-```bash
-pip install -r requirements.txt
-python -m src.run_mu_baseline --meta /path/to/amazon-meta.txt
-```
-
-`amazon-meta.txt` is the SNAP Amazon co-purchasing meta file (Book/Music/DVD/Video). If missing, Colab runner downloads it from SNAP.
+`amazon-meta.txt` SNAP se auto-download (Colab), gitignored.
