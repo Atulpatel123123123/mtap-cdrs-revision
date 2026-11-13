@@ -1,0 +1,114 @@
+% Response to Reviewers — MTAP-D-26-00833 (major revision)
+% Compile separately or include as supplementary PDF for submission.
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+\title{Response to Reviewers\\[0.4em]
+\large MTAP-D-26-00833 --- Comparative study of decomposition approaches for cross-domain recommendation}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+\noindent\textbf{Important framing.} This manuscript is a \emph{comparative study} of existing decomposition methods (MF, MFB, NMF, DMF, SVD) under matched transfer protocols. It does \emph{not} propose a new recommendation model.
+
+\section*{General reply to the Editor and Reviewers}
+We thank the Editor and Reviewers for the careful and constructive comments. In this revision we have:
+\begin{enumerate}
+  \item Clarified the contribution as a controlled comparative evaluation (not a new architecture).
+  \item Strengthened experiments: global-mean ($\mu$) baseline; paired significance tests; runtime; $\gamma$/$d$ sensitivity; convergence figure (600\,DPI); NDCG/Recall; bias ablation; cold-start and rating-bin analyses.
+  \item Improved method documentation: taxonomy; family pros/cons; pseudocode; complexity; DMF attribution; hardware/seeds; fair-protocol caveats.
+\end{enumerate}
+Changes are summarized below by reviewer. New figures created for this revision use 600\,DPI.
+
+\section{Reviewer 1}
+\paragraph{Comment (baseline / rating scale).}
+A trivial baseline and an explicit rating-scale statement were requested.
+\paragraph{Response.}
+All ratings are on a $1$--$5$ scale. We added a global-mean ($\mu$-only) baseline under the same 5-fold protocol and discuss how much of each method's error is explained by the skewed rating mean.
+
+\paragraph{Comment (ranking metric).}
+At least one ranking metric (e.g., NDCG/Recall) was requested.
+\paragraph{Response.}
+We report $\mathrm{NDCG}@5/10$ and $\mathrm{Recall}@5/10$ on $CX_1$ by ranking each user's held-out rated items (graded relevance $=$ true rating). We note that this is not a full-catalogue top-$N$ protocol; that extension is left to future work.
+
+\paragraph{Comment (runtime).}
+Training-time comparisons were requested.
+\paragraph{Response.}
+We added a wall-clock runtime table on $CX_1$ (TR\,$=$\,20\%, $E=20$) for MF, MFB, NMF, SVD, and DMF, together with asymptotic complexity in the method-comparison table. MFB costs only modestly more than MF among SGD methods.
+
+\paragraph{Comment (fairness of DMF/NMF conclusions; density rule).}
+Claims that non-linear/constrained methods are intrinsically weaker, and the ``MFB below 1\% density'' rule, needed softening.
+\paragraph{Response.}
+We explicitly state that the shared $E=20$ budget may under-train slower methods; comparisons are under a matched protocol. The density crossover is marked as a \emph{hypothesis}, because all six targets already lie below 1\% density.
+
+\paragraph{Comment (modern CDRS / GNN future work).}
+Situate results relative to stronger CDRS systems; anchor GNN future work.
+\paragraph{Response.}
+We added a short situating subsection: this paper does not claim to beat graph/adversarial/sequential SOTA on their native benchmarks; MFB is the strongest \emph{among the five compared foundations}. Future work cites Shu et al.\ (IEEE Access, 2024) for GNN$+$bias directions.
+
+\paragraph{Comment (overlap scenario).}
+Only user-overlap is studied.
+\paragraph{Response.}
+We state this scope explicitly and leave item-overlap and no-overlap to future work.
+
+\section{Reviewer 3}
+\paragraph{Comment (Abstract / Intro completeness).}
+SOTA sentence, quantitative result, domain examples, and precise problem scope were requested.
+\paragraph{Response.}
+The abstract now contrasts complex CDRS SOTA with under-studied foundations and reports quantitative MAE ranges. The introduction adds domain impact statistics, e-commerce/entertainment/social examples, and a precise problem statement (failure modes, why backbone comparison matters, scope).
+
+\paragraph{Comment (Literature).}
+Expand Table~1; taxonomy; family advantages/limitations; negative transfer; Amazon citation.
+\paragraph{Response.}
+Related-work table expanded (year, model, datasets, overlap, metrics). We added a taxonomy figure, a family pros/cons table, negative-transfer discussion with citations, and cite He \& McAuley (2016) for the Amazon resource.
+
+\paragraph{Comment (Method completeness).}
+Pseudocode, complexity, conceptual comparison, DMF detail.
+\paragraph{Response.}
+Algorithms for all five adaptations, an $O(\cdot)$ complexity discussion, a ``what is transferred'' comparison table, and clarified DMF attribution (Xue; GMF-style interaction) are included.
+
+\paragraph{Comment (Sensitivity, convergence, environment, significance).}
+Show hyperparameter sensitivity; justify 20 epochs; report hardware/seeds; statistical tests.
+\paragraph{Response.}
+We added a $\gamma$/$d$ sensitivity table on $CX_1$; a convergence figure (600\,DPI) showing flattening near $E=20$; Colab CPU High-RAM and seed $42$; and paired $t$-tests (MFB vs alternatives on $CX_1$; MFB vs DMF on all six pairs).
+
+\section{Reviewer 4}
+\paragraph{Comment (Novelty / English / presentation).}
+Soften ``first'' claims; improve English; presentation.
+\paragraph{Response.}
+Contribution language emphasizes a controlled comparative sparsity sweep. We revised framing away from ``proposed model'' wording, clarified figure captions, and polished conclusions/limitations.
+
+\paragraph{Comment (Amazon benchmark; component-level measures).}
+Justify Amazon; add component-level analysis beyond overall MAE/RMSE.
+\paragraph{Response.}
+Amazon category pairs are justified as a standard explicit-rating CDRS benchmark, with single-source limitation acknowledged. We added cold/mid/warm user-activity slices and rating-bin (1--2 / 3 / 4--5) MAE on $CX_1$.
+
+\section{Reviewer 5 / detailed experimental notes}
+\paragraph{Comment (Density, TR fractions, min-30 filter, denser domains).}
+\paragraph{Response.}
+We clarified that 20/40/60/80\% are fractions of target training ratings (supervision level), not changes to catalogue density; justified the min-30 filter; and discussed generalization to denser domains as an open hypothesis.
+
+\paragraph{Comment (SVD vs MF/MFB transfer; ablation).}
+\paragraph{Response.}
+SVD uses truncated warm-start initialization; MF/MFB use continuous $\gamma$-regularization. The bias ablation contrasts MF (no biases), MFB with factor-only transfer, and full MFB: gains are driven mainly by \emph{modelling} biases under this protocol.
+
+\paragraph{Comment (Tables CX4--CX6).}
+\paragraph{Response.}
+Full MAE/RMSE tables for $CX_1$--$CX_6$ are present with consistent formatting and confidence intervals.
+
+\section*{Honest remaining limitations}
+\begin{itemize}
+  \item Amazon-only (no second dataset family in this revision).
+  \item No re-implementation of a 2024--2025 graph/adversarial SOTA (discussion $+$ strong classical baselines).
+  \item Ranking among held-out rated items, not full-catalogue top-$N$.
+  \item Convergence figure focuses on MF vs MFB at the shared budget.
+\end{itemize}
+
+\vspace{1em}
+\noindent We hope the revised comparative manuscript addresses the reviewers' concerns.
+
+\end{document}
