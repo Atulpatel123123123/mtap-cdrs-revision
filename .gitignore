@@ -3,6 +3,8 @@
 .ipynb_checkpoints/
 amazon-meta.txt
 amazon-meta.txt.gz
+cache_*.npz
 .env
 .DS_Store
 *.bkp
+src/_mfb_cell15.py

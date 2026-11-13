@@ -1,0 +1,22 @@
+{
+  "task": "MTAP_Revision_sensitivity_MFB_CX1",
+  "seed": 42,
+  "folds": 1,
+  "epochs": 20,
+  "train_frac": 0.2,
+  "pair": "Book->Music",
+  "n_users": 650,
+  "n_items_t": 41200,
+  "note": "Sparse-SGD MFB reimplementation for hyperparameter trends; absolute MAE may differ from notebook dense loops. Main comparative tables remain the notebook 5-fold results.",
+  "gamma_sweep_d10": [
+    {"gamma": 0.0, "mae": 0.7378},
+    {"gamma": 0.01, "mae": 0.7378},
+    {"gamma": 0.1, "mae": 0.7378},
+    {"gamma": 1.0, "mae": 0.7378}
+  ],
+  "d_sweep_gamma0.1": [
+    {"d": 5, "mae": 0.7280},
+    {"d": 10, "mae": 0.7378},
+    {"d": 20, "mae": 0.7396}
+  ]
+}
