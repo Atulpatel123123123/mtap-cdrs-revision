@@ -1,0 +1,23 @@
+{
+  "seed": 42,
+  "tr": 0.2,
+  "epochs": 20,
+  "pair": "Book->Music",
+  "rows": [
+    {
+      "variant": "MF (no biases)",
+      "mae": 3.0625727990731964,
+      "rmse": 3.614460566625907
+    },
+    {
+      "variant": "MFB factors-only transfer",
+      "mae": 0.6922337957709015,
+      "rmse": 0.9064121740696204
+    },
+    {
+      "variant": "MFB full (factors+bias transfer)",
+      "mae": 0.6930280514968432,
+      "rmse": 0.9057114155757628
+    }
+  ]
+}
