@@ -31,6 +31,7 @@ def ensure_amazon_meta(preferred: Optional[str] = None) -> str:
         candidates.append(preferred)
     candidates.extend(
         [
+            r"G:\My Drive\amazon-meta.txt",
             "/content/drive/MyDrive/amazon-meta.txt",
             "/content/drive/MyDrive/amazon-meta.txt.gz",
             "/content/amazon-meta.txt",

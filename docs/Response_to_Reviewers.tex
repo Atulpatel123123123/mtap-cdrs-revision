@@ -85,7 +85,7 @@ Contribution language emphasizes a controlled comparative sparsity sweep. We rev
 \paragraph{Comment (Amazon benchmark; component-level measures).}
 Justify Amazon; add component-level analysis beyond overall MAE/RMSE.
 \paragraph{Response.}
-Amazon category pairs are justified as a standard explicit-rating CDRS benchmark, with single-source limitation acknowledged. We added cold/mid/warm user-activity slices and rating-bin (1--2 / 3 / 4--5) MAE on $CX_1$.
+Amazon category pairs are justified as a standard explicit-rating CDRS benchmark. We additionally added a denser MovieLens-1M family (Action$\to$Adventure tabulated with classical methods; three further genre pairs for GNN\_CDRS) and a matched LightGCN-style GNN\_CDRS baseline on all six Amazon pairs. MFB remains best; GNN improves on DMF but does not overtake MFB under the shared rating-prediction protocol. We also added cold/mid/warm user-activity slices and rating-bin (1--2 / 3 / 4--5) MAE on $CX_1$.
 
 \section{Reviewer 5 / detailed experimental notes}
 \paragraph{Comment (Density, TR fractions, min-30 filter, denser domains).}
@@ -102,8 +102,8 @@ Full MAE/RMSE tables for $CX_1$--$CX_6$ are present with consistent formatting a
 
 \section*{Honest remaining limitations}
 \begin{itemize}
-  \item Amazon-only (no second dataset family in this revision).
-  \item No re-implementation of a 2024--2025 graph/adversarial SOTA (discussion $+$ strong classical baselines).
+  \item Classical methods on MovieLens are fully tabulated for $ML_1$; additional ML pairs report GNN\_CDRS.
+  \item GNN\_CDRS is a matched LightGCN-style baseline (not a 2024--2025 adversarial multi-graph SOTA).
   \item Ranking metrics (Precision/Recall/F1/NDCG/AUC, etc.) deferred to future work; current scope is rating prediction only.
   \item Convergence figure focuses on MF vs MFB at the shared budget.
 \end{itemize}
