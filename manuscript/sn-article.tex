@@ -191,20 +191,7 @@ To organize this literature beyond a chronological narrative, Figure~\ref{fig:cd
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[
-  font=\scriptsize,
-  box/.style={draw, rounded corners=2pt, align=center, inner sep=3pt},
-  root/.style={box, fill=gray!15, font=\small\bfseries},
-  leaf/.style={box, fill=gray!5, text width=2.05cm}
-]
-\node[root] (root) {CDRS methods};
-\node[leaf, below=1.0cm of root, xshift=-4.4cm] (f1) {(1) Matrix decomposition\\MF, MFB, NMF, SVD};
-\node[leaf, below=1.0cm of root, xshift=-2.2cm] (f2) {(2) Deep learning\\DMF, sequential};
-\node[leaf, below=1.0cm of root] (f3) {(3) Adversarial\\DADIN, dual adapt.};
-\node[leaf, below=1.0cm of root, xshift=2.2cm] (f4) {(4) GNN-based\\bi-/multi-graph};
-\node[leaf, below=1.0cm of root, xshift=4.4cm] (f5) {(5) Pre-train / meta\\MF-GSLAE, MIMNet};
-\foreach \n in {f1,f2,f3,f4,f5} {\draw (root.south) -- (\n.north);}
-\end{tikzpicture}
+\includegraphics[width=0.95\textwidth]{Fig1.png}
 \caption{Taxonomy of CDRS techniques.}
 \label{fig:cdrs_taxonomy}
 \end{figure}
@@ -314,7 +301,7 @@ The user-item interactions within these domains are captured by two correspondin
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{Fig1.png}
+    \includegraphics[width=0.8\textwidth]{Fig2.png}
     \caption{Overlap scenarios in cross-domain recommendation.}
     \label{fig:overlap}
 \end{figure}
@@ -366,7 +353,7 @@ Here, $R^S$ is the set of known ratings in the source domain, and $\lambda$ is t
 % Figure 2 Placeholder
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{Fig2.png}
+    \includegraphics[width=0.8\textwidth]{Fig3.png}
     \caption{Framework of MF for cross-domain recommendation.}
     \label{fig:mf_cdrs}
 \end{figure}
@@ -461,7 +448,7 @@ This approach uses an adaptation of Non-negative Matrix Factorization (NMF) for 
 % Figure 3 Placeholder
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{Fig3.png}
+    \includegraphics[width=0.8\textwidth]{Fig4.png}
     \caption{Framework of NMF for cross-domain recommendation.}
     \label{fig:nmf_cdrs}
 \end{figure}
@@ -508,7 +495,7 @@ This approach is diagrammatically depicted in Figure \ref{fig:svd_cdrs} and cons
 % Figure 4 Placeholder
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{Fig4.png}
+    \includegraphics[width=0.8\textwidth]{Fig5.png}
     \caption{Framework of SVD for cross-domain recommendation.}
     \label{fig:svd_cdrs}
 \end{figure}
@@ -557,9 +544,9 @@ As depicted in Figure \textbf{\ref{fig:dmf_cdrs}}, the key concept does not invo
 % Figure 5 Placeholder
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{Fig5.png}
+    \includegraphics[width=0.8\textwidth]{Fig6.png}
     \caption{Framework of DMF for cross-domain recommendation.}
-    \label{fig:dmf_cdrs}
+    \label{fig:dmf_cdrs}
 \end{figure}
 
 
@@ -690,7 +677,7 @@ The experiments were performed using Amazon product data spanning the categories
 % Figure 6 Placeholder
 \begin{figure}[ht]
     \centering
-     \includegraphics[width=0.8\textwidth]{Fig6.png} 
+     \includegraphics[width=0.8\textwidth]{Fig7.png} 
     \caption{Format of the Amazon dataset.}
     \label{fig:amazon_format}
 \end{figure}
@@ -773,7 +760,7 @@ We trained source and target phases for $E=20$ iterations for every compared met
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.95\textwidth]{Fig7.png}
+\includegraphics[width=0.95\textwidth]{Fig8.png}
 \caption{Convergence curves on $CX_1$ (TR\,$=$\,20\%).}
 \label{fig:convergence}
 \end{figure}
@@ -796,7 +783,7 @@ The comprehensive experimental results are detailed in Tables \ref{tab:mae_cx1}-
 
 % Figure 7 RMSE 
 \begin{figure}[ht]
-    \centering \includegraphics[width=0.8\textwidth]{Fig8.png}
+    \centering \includegraphics[width=0.8\textwidth]{Fig9.png}
     \caption{RMSE on $CX_1$--$CX_6$ for different training ratios.}
     \label{fig:rmse_all}
 \end{figure}
@@ -804,7 +791,7 @@ The comprehensive experimental results are detailed in Tables \ref{tab:mae_cx1}-
 % Figure 8 MAE
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.9\textwidth]{Fig9.png}
+    \includegraphics[width=0.9\textwidth]{Fig10.png}
     \caption{MAE on $CX_1$--$CX_6$ for different training ratios.}
     \label{fig:mae_all}
 \end{figure}
