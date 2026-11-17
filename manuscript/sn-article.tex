@@ -242,7 +242,7 @@ Pre-training / meta-learning & Reuses multi-domain signals; supports adaptation 
 
 \begin{sidewaystable}[ht]
 \centering
-\caption{Comparative summary of related work. Survey papers and method papers are listed separately. Reported scores are taken from the original papers (metric types differ across studies).}
+\caption{Comparative summary of related work. Reported scores are taken from the original papers (metric types differ across studies).}
 \label{tab:related_work_summary}
 \renewcommand{\arraystretch}{1.25}
 \setlength{\tabcolsep}{3pt}
@@ -251,13 +251,8 @@ Pre-training / meta-learning & Reuses multi-domain signals; supports adaptation 
 \hline
 \textbf{Reference} & \textbf{Year} & \textbf{Model / type} & \textbf{Datasets} & \textbf{Scenario} & \textbf{Reported performance} & \textbf{Focus}\\
 \hline
-\multicolumn{7}{l}{\emph{Survey papers}} \\
-\hline
 Zang et al.~\cite{zang2022survey} & 2022 & Survey \& taxonomy & Multiple (review) & All & --- & CDRS overlap taxonomy (user/item/non-overlap). \\
 Ayemowa et al.~\cite{ayemowa2024systematic} & 2024 & Survey (deep learning) & Multiple (review) & All & --- & Systematic review of deep learning in CDRS. \\
-\hline
-\multicolumn{7}{l}{\emph{Method papers}} \\
-\hline
 Patel \& Kant~\cite{patel2025enhanced} & 2025 & CF + transfer learning & Amazon category pairs & User overlap & MAE/RMSE on sparse targets & Classical CF with transfer for sparse targets. \\
 Li et al.~\cite{li2022adversarial} & 2022 & Adversarial CDR & Cross-domain rating benchmarks & User overlap & MAE/RMSE (vs.\ CDR baselines) & Aligns user feature distributions across domains. \\
 Kong et al.~\cite{kong2024dadin} & 2024 & DADIN & Amazon; Huawei & User overlap & AUC $+0.71\%$ (Amazon), $+0.08\%$ (Huawei) vs.\ strongest baseline & Domain-adversarial deep interest network. \\
