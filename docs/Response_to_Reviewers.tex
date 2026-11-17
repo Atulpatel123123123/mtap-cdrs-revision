@@ -19,7 +19,7 @@
 We thank the Editor and Reviewers for the careful and constructive comments. In this revision we have:
 \begin{enumerate}
   \item Clarified the contribution as a controlled comparative evaluation (not a new architecture).
-  \item Strengthened experiments: global-mean ($\mu$) baseline; paired significance tests; runtime; $\gamma$/$d$ sensitivity; convergence figure (600\,DPI); NDCG/Recall; bias ablation; cold-start and rating-bin analyses.
+  \item Strengthened experiments under a \emph{rating-prediction} protocol: global-mean ($\mu$) baseline; paired significance tests; runtime; $\gamma$/$d$ sensitivity; convergence figure (600\,DPI); bias ablation; cold-start and rating-bin analyses. Ranking metrics are deferred to future work.
   \item Improved method documentation: taxonomy; family pros/cons; pseudocode; complexity; DMF attribution; hardware/seeds; fair-protocol caveats.
 \end{enumerate}
 Changes are summarized below by reviewer. New figures created for this revision use 600\,DPI.
@@ -33,7 +33,7 @@ All ratings are on a $1$--$5$ scale. We added a global-mean ($\mu$-only) baselin
 \paragraph{Comment (ranking metric).}
 At least one ranking metric (e.g., NDCG/Recall) was requested.
 \paragraph{Response.}
-We report $\mathrm{NDCG}@5/10$ and $\mathrm{Recall}@5/10$ on $CX_1$ by ranking each user's held-out rated items (graded relevance $=$ true rating). We note that this is not a full-catalogue top-$N$ protocol; that extension is left to future work.
+The present revision keeps the study scope as a \emph{comparative rating-prediction} evaluation (MAE/RMSE), which matches the original experimental design of the five decompositions. A full ranking protocol---Precision@$K$, Recall@$K$, F1, NDCG@$K$, AUC/HR, and related top-$N$ measures---is explicitly listed as \textbf{future work} and will be addressed when the same methods are evaluated under ranking losses / ranking metrics. We prefer not to mix a partial ranking add-on with the matched prediction protocol in this revision.
 
 \paragraph{Comment (runtime).}
 Training-time comparisons were requested.
@@ -104,7 +104,7 @@ Full MAE/RMSE tables for $CX_1$--$CX_6$ are present with consistent formatting a
 \begin{itemize}
   \item Amazon-only (no second dataset family in this revision).
   \item No re-implementation of a 2024--2025 graph/adversarial SOTA (discussion $+$ strong classical baselines).
-  \item Ranking among held-out rated items, not full-catalogue top-$N$.
+  \item Ranking metrics (Precision/Recall/F1/NDCG/AUC, etc.) deferred to future work; current scope is rating prediction only.
   \item Convergence figure focuses on MF vs MFB at the shared budget.
 \end{itemize}
 

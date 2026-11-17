@@ -167,7 +167,7 @@ Recent CDRS work emphasizes complex architectures (e.g., GNNs and adversarial le
 The contributions are as follows:
 \begin{itemize}
     \item[-] A matched evaluation protocol for MF, MFB, NMF, DMF, and SVD in a two-phase CDRS setting across six Amazon pairs and four training ratios.
-    \item[-] Empirical evidence that bias-aware factorization (MFB) is the most robust of the five compared methods under sparse targets (20\%--80\% training), supported by significance tests, a $\mu$ baseline, ranking metrics, and ablation.
+    \item[-] Empirical evidence that bias-aware factorization (MFB) is the most robust of the five compared methods under sparse targets (20\%--80\% training), supported by significance tests, a $\mu$ baseline, ablation, and cold-start / rating-bin probes---all under a \emph{rating-prediction} protocol (MAE/RMSE).
     \item[-] Practical guidance for selecting a decomposition backbone in sparse cross-domain settings, with explicit limitations (Amazon-only, user-overlap, shared hyperparameter budget).
 \end{itemize}
 
@@ -798,9 +798,7 @@ MAE = \frac{1}{|r_T|} \sum_{(u,i) \in r_T} |r_{u,i} - \hat{r}_{u,i}|
 RMSE = \sqrt{\frac{1}{|r_T|} \sum_{(u,i) \in r_T} (r_{u,i} - \hat{r}_{u,i})^2}
 \end{equation}
 
-Here, $r_T$ represents the total number of ratings we predict in the target domain, $r_{u,i}$ is the actual rating provided by user $u$ for item $i$, and $\hat{r}_{u,i}$ is our predicted rating. Lower MAE or RMSE values correspond to better predictive performance.
-
-In addition to pointwise error, we report graded $\mathrm{NDCG}@K$ and binary $\mathrm{Recall}@K$ ($K\in\{5,10\}$) on $CX_1$ by ranking each user's held-out rated items according to predicted score (relevance $=$ true rating; Recall treats rating $\ge 4$ as relevant). This is a rating-ranking protocol among observed test items rather than a full-catalogue top-$N$ task, and is intended as a complementary check that MAE/RMSE improvements also appear in rank order.
+Here, $r_T$ represents the total number of ratings we predict in the target domain, $r_{u,i}$ is the actual rating provided by user $u$ for item $i$, and $\hat{r}_{u,i}$ is our predicted rating. Lower MAE or RMSE values correspond to better predictive performance. The present comparative study is restricted to this \emph{rating-prediction} setting. Ranking-oriented metrics (e.g., Precision@$K$, Recall@$K$, F1, NDCG@$K$, AUC/HR) and full-catalogue top-$N$ evaluation are left to future work when the same decompositions are assessed under an explicit ranking protocol.
 
 \subsection{Result Analysis and Discussion}
 The comprehensive experimental results are detailed in Tables \ref{tab:mae_cx1}--\ref{tab:rmse_cx6} and visualized in Fig. \ref{fig:rmse_all} and Fig. \ref{fig:mae_all}. The comparative analysis reveals distinct performance hierarchies among the decomposition approaches, providing critical insights into their intrinsic transfer capabilities.
@@ -829,7 +827,7 @@ As for non-linear and constrained methods, DMF\_CDRS, employing a neural archite
 Overall, the above analysis unambiguously establishes that approaches that explicitly model and transfer latent user-item biases (MFB\_CDRS) provide the best means for solving the problem of cross-domain recommendations, and that these models significantly outperform both complex neural networks and constrained additive models in sparse settings.
 
 \subsection{Ablation: bias modelling vs.\ bias transfer}\label{sec:ablation}
-A natural question is whether MFB's gains come from (i)~having user/item bias parameters at all or (ii)~the $\gamma$-regularized transfer of those biases from the source. Table~\ref{tab:mae_cx1} already provides the primary ablation of (i): on $CX_1$ at 20\% training, removing biases entirely (MF\_CDRS) raises MAE from $0.6834$ (MFB) to $3.6606$. Table~\ref{tab:ablation} isolates (ii) on the same $CX_1$ split used for the runtime/ranking probes (TR\,$=$\,20\%, $E=20$): MFB with factor transfer only (biases fitted locally, no $\gamma$ pull on $b_u,b_i$) matches full bias+factor transfer to three decimals (MAE $0.6922$ vs.\ $0.6930$), while MF without biases remains far worse ($3.0626$ on this probe). Thus, under the matched sparse protocol, the decisive ingredient is \emph{modelling} biases in the predictor; continuous bias-alignment adds little once local biases are free parameters. This clarifies the mechanism behind the MFB ranking without claiming that $\gamma$ bias transfer is universally necessary.
+A natural question is whether MFB's gains come from (i)~having user/item bias parameters at all or (ii)~the $\gamma$-regularized transfer of those biases from the source. Table~\ref{tab:mae_cx1} already provides the primary ablation of (i): on $CX_1$ at 20\% training, removing biases entirely (MF\_CDRS) raises MAE from $0.6834$ (MFB) to $3.6606$. Table~\ref{tab:ablation} isolates (ii) on the same $CX_1$ split used for the runtime probe (TR\,$=$\,20\%, $E=20$): MFB with factor transfer only (biases fitted locally, no $\gamma$ pull on $b_u,b_i$) matches full bias+factor transfer to three decimals (MAE $0.6922$ vs.\ $0.6930$), while MF without biases remains far worse ($3.0626$ on this probe). Thus, under the matched sparse protocol, the decisive ingredient is \emph{modelling} biases in the predictor; continuous bias-alignment adds little once local biases are free parameters. This clarifies the mechanism behind MFB's MAE/RMSE advantage without claiming that $\gamma$ bias transfer is universally necessary.
 
 \begin{table}[htbp]
 \centering
@@ -886,27 +884,7 @@ High ($4$--$5$) & 15839 & $0.558$ & $0.518$ & $0.539$ \\
 \end{table}
 
 \subsection{Relation to stronger CDRS systems}
-This paper is a comparative evaluation of foundational decompositions, not a proposal of a new CDRS architecture and not a claim to beat recent graph, adversarial, or sequential systems on their native benchmarks. Those systems typically optimize ranking losses on denser or sequential logs and add substantial machinery around an embedding backbone (Table~\ref{tab:related_work_summary}). Under the matched sparse protocol studied here, bias-aware factorization (MFB) is simply the strongest among the five compared operators---and stronger than a $\mu$ baseline---on MAE/RMSE and on $CX_1$ NDCG. The practical takeaway for comparative CDRS work is therefore methodological: when reporting gains from deeper models in sparse targets, an MFB-style bias-aware transfer baseline is a fair reference point for the decomposition component.
-
-\subsection{Ranking metrics on $CX_1$}\label{sec:ranking}
-Table~\ref{tab:ndcg} summarizes $\mathrm{NDCG}@K$ and $\mathrm{Recall}@K$ for the global-mean baseline, MFB\_CDRS, and DMF\_CDRS on $CX_1$ (Book$\to$Music, TR\,$=$\,20\%, $E=20$, seed $42$; 649 users with at least two test ratings). MFB improves over both $\mu$ and DMF on $\mathrm{NDCG}@5$ ($0.8224$ vs.\ $0.8053$ / $0.7789$) and $\mathrm{NDCG}@10$, with a smaller but consistent gain on Recall. Because Amazon ratings are heavily skewed toward high scores, absolute NDCG values are high even for $\mu$; the discriminative signal is the gap versus MFB. Full-catalogue top-$N$ evaluation and item-/no-overlap scenarios remain future work.
-
-\begin{table}[htbp]
-\centering
-\caption{Ranking metrics on $CX_1$ (rank within held-out rated items; TR\,$=$\,20\%).}
-\label{tab:ndcg}
-\renewcommand{\arraystretch}{1.15}
-\small
-\begin{tabular}{lcccc}
-\toprule
-\textbf{Method} & $\mathrm{NDCG}@5$ & $\mathrm{NDCG}@10$ & $\mathrm{Recall}@5$ & $\mathrm{Recall}@10$ \\
-\midrule
-$\mu$-baseline & $0.8053$ & $0.8482$ & $0.4559$ & $0.7217$ \\
-MFB\_CDRS & $0.8224$ & $0.8566$ & $0.4623$ & $0.7229$ \\
-DMF\_CDRS & $0.7789$ & $0.8302$ & $0.4473$ & $0.7181$ \\
-\bottomrule
-\end{tabular}
-\end{table}
+This paper is a comparative evaluation of foundational decompositions, not a proposal of a new CDRS architecture and not a claim to beat recent graph, adversarial, or sequential systems on their native benchmarks. Those systems typically optimize ranking losses on denser or sequential logs and add substantial machinery around an embedding backbone (Table~\ref{tab:related_work_summary}). Under the matched sparse \emph{rating-prediction} protocol studied here, bias-aware factorization (MFB) is simply the strongest among the five compared operators---and stronger than a $\mu$ baseline---on MAE/RMSE. The practical takeaway for comparative CDRS work is therefore methodological: when reporting gains from deeper models in sparse targets, an MFB-style bias-aware transfer baseline is a fair reference point for the decomposition component. Ranking-protocol comparisons against those systems are future work.
 
 \subsection{Hyperparameter sensitivity}\label{sec:sensitivity}
 To make the shared hyperparameter choice transparent, Table~\ref{tab:sensitivity} reports an MFB\_CDRS sensitivity probe on $CX_1$ (Book$\to$Music) at 20\% target training with the same seed ($42$) and $E=20$ budget as the main protocol (one held-out fold for this probe; the comparative MAE/RMSE tables remain 5-fold). Varying $\gamma\in\{0,0.01,0.1,1\}$ at $d=10$ leaves MAE essentially unchanged at full budget ($0.7378$), indicating that---under user-overlap transfer with matched epochs---final rating error is robust to the precise transfer weight once target SGD has run. Mid-training snapshots can still separate $\gamma$ values, but the operating point used in the paper is insensitive. Varying $d\in\{5,10,20\}$ at $\gamma=0.1$ shows a mild preference for the smaller latent size ($d=5$: $0.7280$; $d=10$: $0.7378$; $d=20$: $0.7396$). We retain $d=10$ in the main tables as a shared setting across MF/MFB/NMF/DMF/SVD that balances capacity and cost; the probe does not support claiming that larger $d$ helps under this sparse target protocol.
@@ -1239,11 +1217,11 @@ MFB\_CDRS & $1.0291 \pm 0.0028$ & $0.9992 \pm 0.0034$ & $0.9841 \pm 0.0031$ & $0
 
 \section{Conclusions and Future Works}
 
-This paper is a comparative study of five foundational decompositions---MF, MFB, NMF, DMF, and SVD---under matched cross-domain transfer protocols and controlled target sparsity. It does not propose a new CDRS architecture. Across six Amazon category pairs, bias-aware factorization (MFB) is consistently the strongest of the compared methods on MAE/RMSE, and it also leads on the $CX_1$ ranking and cold-start probes. The ablation indicates that modelling user/item biases is the main driver of that advantage under sparse targets.
+This paper is a comparative study of five foundational decompositions---MF, MFB, NMF, DMF, and SVD---under matched cross-domain transfer protocols and controlled target sparsity. It does not propose a new CDRS architecture. The evaluation focuses on \emph{rating prediction} (MAE/RMSE). Across six Amazon category pairs, bias-aware factorization (MFB) is consistently the strongest of the compared methods on these prediction metrics, including cold-start and rating-bin probes. The ablation indicates that modelling user/item biases is the main driver of that advantage under sparse targets.
 
-Limitations follow from the comparative design: Amazon explicit ratings only; user-overlap only; a shared $d$, $\lambda$, $\eta$, $\gamma$, and $E=20$ budget; and a shallow DMF instantiation. Because all six targets already lie below 1\% density, we treat any density ``crossover'' between MFB and MF as a hypothesis for denser domains rather than an established rule. Under the matched budget, weaker NMF/DMF scores should not be read as intrinsic inferiority of all non-linear methods.
+Limitations follow from the comparative design: Amazon explicit ratings only; user-overlap only; a shared $d$, $\lambda$, $\eta$, $\gamma$, and $E=20$ budget; a shallow DMF instantiation; and no ranking-protocol evaluation in the present study. Because all six targets already lie below 1\% density, we treat any density ``crossover'' between MFB and MF as a hypothesis for denser domains rather than an established rule. Under the matched budget, weaker NMF/DMF scores should not be read as intrinsic inferiority of all non-linear methods.
 
-Future comparative and systems work may (i)~pair bias-aware transfer with GNN encoders~\cite{shu2024self}, (ii)~extend the same protocol to item-overlap and non-overlap settings (e.g., with text or LLM-derived features), and (iii)~study privacy-preserving variants such as federated matrix factorization.
+Future work will extend this comparative protocol to \textbf{ranking evaluation}---Precision@$K$, Recall@$K$, F1, NDCG@$K$, AUC/HR, and related top-$N$ measures---once the same decompositions are assessed under an explicit ranking setting. Additional directions include (i)~pairing bias-aware transfer with GNN encoders~\cite{shu2024self}, (ii)~item-overlap and no-overlap scenarios, and (iii)~privacy-preserving variants such as federated matrix factorization.
 
 
 
