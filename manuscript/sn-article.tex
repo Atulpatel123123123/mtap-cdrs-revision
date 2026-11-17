@@ -205,7 +205,7 @@ To organize this literature beyond a chronological narrative, Figure~\ref{fig:cd
 \node[leaf, below=1.0cm of root, xshift=4.4cm] (f5) {(5) Pre-train / meta\\MF-GSLAE, MIMNet};
 \foreach \n in {f1,f2,f3,f4,f5} {\draw (root.south) -- (\n.north);}
 \end{tikzpicture}
-\caption{Taxonomy of CDRS techniques used in this paper (five families).}
+\caption{Taxonomy of CDRS techniques.}
 \label{fig:cdrs_taxonomy}
 \end{figure}
 
@@ -223,7 +223,7 @@ Table~\ref{tab:family_pros_cons} summarizes advantages and limitations of each f
 
 \begin{table}[htbp]
 \centering
-\caption{Advantages and limitations of CDRS method families in cross-domain / sparse settings.}
+\caption{Advantages and limitations of CDRS method families.}
 \label{tab:family_pros_cons}
 \renewcommand{\arraystretch}{1.2}
 \small
@@ -281,7 +281,7 @@ To help understand our framework, we list the main mathematical notations used i
 
 \begin{table}[ht]
 \centering
-\caption{Summary of Key Notations}
+\caption{Summary of key notations.}
 \label{tab:notations}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l p{10cm}}
@@ -315,7 +315,7 @@ The user-item interactions within these domains are captured by two correspondin
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{Fig1.png}
-    \caption{Overlap Scenarios in Cross-domain recommendation system}
+    \caption{Overlap scenarios in cross-domain recommendation.}
     \label{fig:overlap}
 \end{figure}
 
@@ -367,7 +367,7 @@ Here, $R^S$ is the set of known ratings in the source domain, and $\lambda$ is t
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{Fig2.png}
-    \caption{Framework of the Matrix Factorization (MF) adaptation used in this comparative study.}
+    \caption{Framework of MF for cross-domain recommendation.}
     \label{fig:mf_cdrs}
 \end{figure}
 
@@ -462,7 +462,7 @@ This approach uses an adaptation of Non-negative Matrix Factorization (NMF) for 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{Fig3.png}
-    \caption{Framework of the Non-negative Matrix Factorization (NMF) adaptation used in this comparative study.}
+    \caption{Framework of NMF for cross-domain recommendation.}
     \label{fig:nmf_cdrs}
 \end{figure}
 
@@ -509,7 +509,7 @@ This approach is diagrammatically depicted in Figure \ref{fig:svd_cdrs} and cons
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{Fig4.png}
-    \caption{Framework of the Singular Value Decomposition (SVD) adaptation used in this comparative study.}
+    \caption{Framework of SVD for cross-domain recommendation.}
     \label{fig:svd_cdrs}
 \end{figure}
 
@@ -558,7 +558,7 @@ As depicted in Figure \textbf{\ref{fig:dmf_cdrs}}, the key concept does not invo
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{Fig5.png}
-    \caption{Framework of the Deep Matrix Factorization (DMF) adaptation used in this comparative study.}
+    \caption{Framework of DMF for cross-domain recommendation.}
     \label{fig:dmf_cdrs}
 \end{figure}
 
@@ -591,7 +591,7 @@ This target model, with its randomly initialized embeddings but a pre-trained in
 Algorithms~\ref{alg:mf}--\ref{alg:dmf} summarize the two-phase source-to-target procedures used in our experiments.
 
 \begin{algorithm}[htbp]
-\caption{MF\_CDRS training}
+\caption{Training procedure of MF\_CDRS.}
 \label{alg:mf}
 \begin{algorithmic}[1]
 \State Train $P^S,Q^S$ on $R^S$ by SGD on $\mathcal{L}_{Source}$
@@ -604,7 +604,7 @@ Algorithms~\ref{alg:mf}--\ref{alg:dmf} summarize the two-phase source-to-target 
 \end{algorithm}
 
 \begin{algorithm}[htbp]
-\caption{MFB\_CDRS training}
+\caption{Training procedure of MFB\_CDRS.}
 \label{alg:mfb}
 \begin{algorithmic}[1]
 \State Train $P^S,Q^S,\mu^S,b_u^S,b_i^S$ on $R^S$
@@ -617,7 +617,7 @@ Algorithms~\ref{alg:mf}--\ref{alg:dmf} summarize the two-phase source-to-target 
 \end{algorithm}
 
 \begin{algorithm}[htbp]
-\caption{NMF\_CDRS training}
+\caption{Training procedure of NMF\_CDRS.}
 \label{alg:nmf}
 \begin{algorithmic}[1]
 \State Learn non-negative $W^S,H^S$ on $R^S$ with multiplicative updates
@@ -630,7 +630,7 @@ Algorithms~\ref{alg:mf}--\ref{alg:dmf} summarize the two-phase source-to-target 
 \end{algorithm}
 
 \begin{algorithm}[htbp]
-\caption{SVD\_CDRS training}
+\caption{Training procedure of SVD\_CDRS.}
 \label{alg:svd}
 \begin{algorithmic}[1]
 \State Compute truncated SVD on source ratings to obtain warm-start factors
@@ -643,7 +643,7 @@ Algorithms~\ref{alg:mf}--\ref{alg:dmf} summarize the two-phase source-to-target 
 \end{algorithm}
 
 \begin{algorithm}[htbp]
-\caption{DMF\_CDRS training}
+\caption{Training procedure of DMF\_CDRS.}
 \label{alg:dmf}
 \begin{algorithmic}[1]
 \State Train $U^S,V^S,w^S,b^S$ on $R^S$ (Hadamard product $+$ linear layer)
@@ -660,7 +660,7 @@ Table~\ref{tab:method_compare} contrasts the five adaptations by transferred kno
 
 \begin{table}[htbp]
 \centering
-\caption{Conceptual comparison of the five cross-domain decomposition adaptations.}
+\caption{Comparison of the five cross-domain decomposition methods.}
 \label{tab:method_compare}
 \renewcommand{\arraystretch}{1.2}
 \small
@@ -691,7 +691,7 @@ The experiments were performed using Amazon product data spanning the categories
 \begin{figure}[ht]
     \centering
      \includegraphics[width=0.8\textwidth]{Fig6.png} 
-    \caption{Amazon dataset format.}
+    \caption{Format of the Amazon dataset.}
     \label{fig:amazon_format}
 \end{figure}
 
@@ -709,7 +709,7 @@ For each combination, we focused on users who engaged with both categories and p
 
 \begin{table}[ht]
 \centering
-\caption{Description of processed dataset}
+\caption{Statistics of the processed datasets.}
 \label{tab:dataset_desc}
 \renewcommand{\arraystretch}{1.2} % Row height badhane ke liye (aapke syntax jaisa)
 \setlength{\tabcolsep}{3pt} % Column spacing adjust karne ke liye taaki page se bahar na jaye
@@ -744,7 +744,7 @@ Table~\ref{tab:runtime} reports wall-clock time for a single $CX_1$ run (Book$\t
 
 \begin{table}[htbp]
 \centering
-\caption{Wall-clock runtime on $CX_1$ (one fold, TR\,$=$\,20\%, $E=20$).}
+\caption{Runtime comparison on $CX_1$ (TR\,$=$\,20\%, $E=20$).}
 \label{tab:runtime}
 \renewcommand{\arraystretch}{1.15}
 \small
@@ -774,7 +774,7 @@ We trained source and target phases for $E=20$ iterations for every compared met
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{Fig7.png}
-\caption{Target-domain convergence on $CX_1$ (TR\,$=$\,20\%). Dashed line marks the paper budget $E=20$.}
+\caption{Convergence curves on $CX_1$ (TR\,$=$\,20\%).}
 \label{fig:convergence}
 \end{figure}
 
@@ -797,7 +797,7 @@ The comprehensive experimental results are detailed in Tables \ref{tab:mae_cx1}-
 % Figure 7 RMSE 
 \begin{figure}[ht]
     \centering \includegraphics[width=0.8\textwidth]{Fig8.png}
-    \caption{RMSE of the five compared decompositions across training ratios 20\%--80\% on $CX_1$--$CX_6$ (lower is better).}
+    \caption{RMSE on $CX_1$--$CX_6$ for different training ratios.}
     \label{fig:rmse_all}
 \end{figure}
 
@@ -805,7 +805,7 @@ The comprehensive experimental results are detailed in Tables \ref{tab:mae_cx1}-
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.9\textwidth]{Fig9.png}
-    \caption{MAE of the five compared decompositions across training ratios 20\%--80\% on $CX_1$--$CX_6$ (lower is better).}
+    \caption{MAE on $CX_1$--$CX_6$ for different training ratios.}
     \label{fig:mae_all}
 \end{figure}
 
@@ -822,7 +822,7 @@ A natural question is whether MFB's gains come from (i)~having user/item bias pa
 
 \begin{table}[htbp]
 \centering
-\caption{Bias ablation on $CX_1$ (one fold, TR\,$=$\,20\%, $E=20$).}
+\caption{Bias ablation results on $CX_1$ (TR\,$=$\,20\%).}
 \label{tab:ablation}
 \renewcommand{\arraystretch}{1.15}
 \small
@@ -842,7 +842,7 @@ To address requests for finer-grained evaluation beyond overall MAE, Table~\ref{
 
 \begin{table}[htbp]
 \centering
-\caption{Per-user MAE on $CX_1$ by target-training activity (TR\,$=$\,20\%).}
+\caption{MAE on $CX_1$ for cold, mid, and warm users (TR\,$=$\,20\%).}
 \label{tab:coldstart}
 \renewcommand{\arraystretch}{1.15}
 \small
@@ -859,7 +859,7 @@ Warm ($> 15$ train ratings) & 203 & $0.808$ & $0.687$ & $0.804$ \\
 
 \begin{table}[htbp]
 \centering
-\caption{Component MAE on $CX_1$ test ratings by true rating bin (TR\,$=$\,20\%).}
+\caption{MAE on $CX_1$ by rating value (TR\,$=$\,20\%).}
 \label{tab:rating_bins}
 \renewcommand{\arraystretch}{1.15}
 \small
@@ -882,7 +882,7 @@ To make the shared hyperparameter choice transparent, Table~\ref{tab:sensitivity
 
 \begin{table}[htbp]
 \centering
-\caption{MFB\_CDRS sensitivity on $CX_1$ at 20\% training ($E=20$, seed $42$).}
+\caption{Sensitivity of MFB\_CDRS to $\gamma$ and $d$ on $CX_1$.}
 \label{tab:sensitivity}
 \renewcommand{\arraystretch}{1.15}
 \small
@@ -901,7 +901,7 @@ Because Amazon ratings are strongly skewed toward high scores (overall mean $\ap
 
 \begin{table}[htbp]
 \centering
-\caption{Global-mean ($\mu$-only) baseline MAE/RMSE (mean $\pm$ 95\% CI) on target domains.}
+\caption{Global-mean ($\mu$) baseline on the target domains.}
 \label{tab:mu_baseline}
 \renewcommand{\arraystretch}{1.15}
 \setlength{\tabcolsep}{3pt}
@@ -928,7 +928,7 @@ Table~\ref{tab:sig_mfb_dmf} extends the closest competitor comparison (MFB vs.\ 
 
 \begin{table}[htbp]
 \centering
-\caption{Paired tests on fold-level MAE for $CX_1$ at 20\% training (MFB vs.\ alternatives).}
+\caption{Paired $t$-tests on $CX_1$ at 20\% training (MFB vs.\ alternatives).}
 \label{tab:sig_cx1}
 \renewcommand{\arraystretch}{1.2}
 \small
@@ -946,7 +946,7 @@ MFB vs.\ SVD & 0.6834 & 3.3108 & $-101.53$ & $5.6\times 10^{-8}$ \\
 
 \begin{table}[htbp]
 \centering
-\caption{Paired $t$-tests on fold-level MAE: MFB vs.\ DMF at 20\% training across all domain pairs.}
+\caption{Paired $t$-tests of MFB vs.\ DMF at 20\% training.}
 \label{tab:sig_mfb_dmf}
 \renewcommand{\arraystretch}{1.2}
 \small
@@ -969,7 +969,7 @@ $CX_6$ & 0.7947 & 0.9137 & $-114.83$ & $3.5\times 10^{-8}$ \\
 % Table 2: MAE CX1
 \begin{table}[ht]
 \centering
-\caption{MAE performance on the $CX_1$ dataset with four training set size}
+\caption{MAE on $CX_1$ for different training ratios.}
 \label{tab:mae_cx1}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
@@ -989,7 +989,7 @@ MFB\_CDRS & $0.6834 \pm 0.0037$ & $0.6698 \pm 0.0017$ & $0.6637 \pm 0.0015$ & $0
 % Table 3: RMSE CX1
 \begin{table}[ht]
 \centering
-\caption{RMSE performance on the $CX_1$ dataset with four training set size}
+\caption{RMSE on $CX_1$ for different training ratios.}
 \label{tab:rmse_cx1}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
@@ -1009,7 +1009,7 @@ MFB\_CDRS & $0.8942 \pm 0.0055$ & $0.8829 \pm 0.0041$ & $0.8842 \pm 0.0041$ & $0
 % Table 4: MAE CX2
 \begin{table}[ht]
 \centering
-\caption{MAE performance on the $CX_2$ dataset with four training set size}
+\caption{MAE on $CX_2$ for different training ratios.}
 \label{tab:mae_cx2}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
@@ -1029,7 +1029,7 @@ MFB\_CDRS & $0.6612 \pm 0.0033$ & $0.6543 \pm 0.0033$ & $0.6517 \pm 0.0019$ & $0
 % Table 5: RMSE CX2
 \begin{table}[ht]
 \centering
-\caption{RMSE performance on the $CX_2$ dataset with four training set size}
+\caption{RMSE on $CX_2$ for different training ratios.}
 \label{tab:rmse_cx2}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
@@ -1049,7 +1049,7 @@ MFB\_CDRS & $0.9011 \pm 0.0034$ & $0.8909 \pm 0.0041$ & $0.8842 \pm 0.0041$ & $0
 % Table 6: MAE CX3
 \begin{table}[ht]
 \centering
-\caption{MAE performance on the $CX_3$ dataset with four training set size}
+\caption{MAE on $CX_3$ for different training ratios.}
 \label{tab:mae_cx3}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
@@ -1069,7 +1069,7 @@ MFB\_CDRS & $0.6611 \pm 0.0015$ & $0.6541 \pm 0.0019$ & $0.6516 \pm 0.0022$ & $0
 % Table 7: RMSE CX3
 \begin{table}[ht]
 \centering
-\caption{RMSE performance on the $CX_3$ dataset with four training set size}
+\caption{RMSE on $CX_3$ for different training ratios.}
 \label{tab:rmse_cx3}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
@@ -1089,7 +1089,7 @@ MFB\_CDRS & $0.9006 \pm 0.0040$ & $0.8907 \pm 0.0036$ & $0.8840 \pm 0.0035$ & $0
 % Table 8: MAE CX4
 \begin{table}[ht]
 \centering
-\caption{MAE performance on the $CX_4$ dataset with four training set size}
+\caption{MAE on $CX_4$ for different training ratios.}
 \label{tab:mae_cx4}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
@@ -1109,7 +1109,7 @@ MFB\_CDRS & $0.6875 \pm 0.0016$ & $0.6727 \pm 0.0026$ & $0.6668 \pm 0.0018$ & $0
 % Table 9: RMSE CX4
 \begin{table}[ht]
 \centering
-\caption{RMSE performance on the $CX_4$ dataset with four training set size}
+\caption{RMSE on $CX_4$ for different training ratios.}
 \label{tab:rmse_cx4}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
@@ -1129,7 +1129,7 @@ MFB\_CDRS & $0.9163 \pm 0.0054$ & $0.9040 \pm 0.0059$ & $0.8984 \pm 0.0057$ & $0
 % Table 10: MAE CX5
 \begin{table}[ht]
 \centering
-\caption{MAE performance on the $CX_5$ dataset with four training set size}
+\caption{MAE on $CX_5$ for different training ratios.}
 \label{tab:mae_cx5}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
@@ -1149,7 +1149,7 @@ MFB\_CDRS & $0.6868 \pm 0.0068$ & $0.6750 \pm 0.0063$ & $0.6695 \pm 0.0080$ & $0
 % Table 11: RMSE CX5
 \begin{table}[ht]
 \centering
-\caption{RMSE performance on the $CX_5$ dataset with four training set size}
+\caption{RMSE on $CX_5$ for different training ratios.}
 \label{tab:rmse_cx5}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
@@ -1169,7 +1169,7 @@ MFB\_CDRS & $0.9185 \pm 0.0094$ & $0.9056 \pm 0.0083$ & $0.8994 \pm 0.0095$ & $0
 % Table 12: MAE CX6 (Set 1)
 \begin{table}[ht]
 \centering
-\caption{MAE performance on the $CX_6$ dataset with four training set size}
+\caption{MAE on $CX_6$ for different training ratios.}
 \label{tab:mae_cx6}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
@@ -1189,7 +1189,7 @@ MFB\_CDRS & $0.7947 \pm 0.0021$ & $0.7630 \pm 0.0024$ & $0.7476 \pm 0.0019$ & $0
 % Table 13: RMSE CX6 (Set 2)
 \begin{table}[ht]
 \centering
-\caption{RMSE performance on the $CX_6$ dataset with four training set size}
+\caption{RMSE on $CX_6$ for different training ratios.}
 \label{tab:rmse_cx6}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
