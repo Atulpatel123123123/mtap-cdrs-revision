@@ -47,37 +47,37 @@ Corresponding Author
 1. Clarify the $1$--$5$ rating range; add a global-mean ($\mu$) baseline so MAE/RMSE near the scale ceiling can be interpreted.
 &
 We appreciate this suggestion. All ratings are on a $1$--$5$ scale. A global-mean ($\mu$) baseline is added under the same 5-fold protocol so readers can gauge absolute error levels.
-\textit{(Sec.~4.6; Sec.~4.13)} \\
+\textit{(Section~4.6 --- Evaluation Metrics; Section~4.13 --- Global-mean ($\mu$) baseline)} \\
 \midrule
 2. Situate MFB against a modern learning-based recommender; cite Meng et al.\ (ASOC 2025) if feasible.
 &
 We thank the reviewer for this helpful pointer. The suggested paper by Meng et al.\ (ASOC 2025) has been \emph{added and cited}. A situating subsection is included, and a matched LightGCN-style GNN\_CDRS baseline is also evaluated on the same splits.
-\textit{(Sec.~4.11; Sec.~3.4.1; Sec.~4.7; Bibliography)} \\
+\textit{(Section~4.11 --- Relation to stronger CDRS systems; Section~3.4.1 --- GNN\_CDRS; Section~4.7 --- Result Analysis and Discussion; Bibliography)} \\
 \midrule
 3. Note that identical hyperparameters / $E{=}20$ likely under-train DMF and NMF; soften ``intrinsically weaker'' claims.
 &
 We appreciate this important clarification. We now state that the matched $E{=}20$ protocol may under-train slower methods and soften data-hungry / intrinsically-weaker wording.
-\textit{(Sec.~4.7; Sec.~5)} \\
+\textit{(Section~4.7 --- Result Analysis and Discussion; Section~5 --- Conclusions and Future Works)} \\
 \midrule
 4. Add at least one ranking metric (NDCG/Recall); note that only user-overlap is evaluated.
 &
 We thank the reviewer. User-overlap is now stated as the explicit scope; item-/no-overlap are future work. This revision keeps matched MAE/RMSE; ranking metrics are listed as concrete future work.
-\textit{(Sec.~3.2; Sec.~4.6; Sec.~5)} \\
+\textit{(Section~3.2 --- Problem Formulation; Section~4.6 --- Evaluation Metrics; Section~5 --- Conclusions and Future Works)} \\
 \midrule
 5. Revisit DMF attribution (Xue / He GMF, not Camilli \& M\'ezard).
 &
 We appreciate this correction. DMF is attributed to Xue et al.\ / GMF (He et al.); Camilli \& M\'ezard is kept as a separate theoretical line.
-\textit{(Sec.~2; Sec.~3.3.5)} \\
+\textit{(Section~2 --- Literature Review; Section~3.3.5 --- DMF\_CDRS)} \\
 \midrule
 6. Present the ``MFB below 1\% density'' rule as a hypothesis, not a demonstrated crossover.
 &
 We agree and thank the reviewer. It is now framed as a hypothesis because all six Amazon targets already sit below 1\% density; $ML_1$ is a denser check.
-\textit{(Sec.~4.1; Sec.~4.7; Sec.~5)} \\
+\textit{(Section~4.1 --- Datasets; Section~4.7 --- Result Analysis and Discussion; Section~5 --- Conclusions and Future Works)} \\
 \midrule
 7. Light English edit; anchor GNN future work to Shu et al.\ (IEEE Access, 2024).
 &
 We appreciate these suggestions. First-person-singular phrasing and capitalization inconsistencies were cleaned. The suggested paper by Shu et al.\ (IEEE Access, 2024) has been \emph{added and cited}, and GNN future work is anchored to it with concrete next steps.
-\textit{(Sec.~2; Sec.~5; Bibliography)} \\
+\textit{(Section~2 --- Literature Review; Section~5 --- Conclusions and Future Works; Bibliography)} \\
 \bottomrule
 \end{longtable}
 }
@@ -106,107 +106,107 @@ We thank the reviewer. A representative quantitative statement (MFB MAE and rela
 3. Introduction: strengthen domain importance with quantitative / platform-scale context.
 &
 We appreciate this comment. The Introduction now includes brief adoption/impact context for recommendation-driven platforms, with supporting references.
-\textit{(Sec.~1)} \\
+\textit{(Section~1 --- Introduction)} \\
 \midrule
 4. Introduction: describe application domains with concrete examples (rating / implicit / social).
 &
 We thank the reviewer. E-commerce rating, entertainment implicit-feedback, and social-graph examples are briefly illustrated.
-\textit{(Sec.~1)} \\
+\textit{(Section~1 --- Introduction)} \\
 \midrule
 5. Expand related-work table (year, model, datasets, reported metrics where available).
 &
 We appreciate this request. The related-work table was expanded within space limits; survey/method rows are separated and scoped to CDRS-relevant work.
-\textit{(Sec.~2)} \\
+\textit{(Section~2 --- Literature Review)} \\
 \midrule
 6. Add a structured taxonomy / family classification of CDRS techniques.
 &
 We thank the reviewer. A taxonomy paragraph organizes families (decomposition, deep, adversarial, GNN, pretrain/meta) with representative methods.
-\textit{(Sec.~2)} \\
+\textit{(Section~2 --- Literature Review)} \\
 \midrule
 7. Discuss advantages and limitations of each technique family.
 &
 We appreciate this suggestion. A family-level pros/cons discussion is added to justify focusing on foundational decompositions.
-\textit{(Sec.~2)} \\
+\textit{(Section~2 --- Literature Review)} \\
 \midrule
 8. Cite/discuss negative transfer in CDRS.
 &
 We thank the reviewer for highlighting this. Negative transfer is discussed and linked to the observed NMF behaviour under non-negativity constraints.
-\textit{(Sec.~2; Sec.~4.7)} \\
+\textit{(Section~2 --- Literature Review; Section~4.7 --- Result Analysis and Discussion)} \\
 \midrule
 9. Sharpen the precise problem statement / scope of the comparative answer.
 &
 We appreciate this comment. Problem Formulation now states measurable failure modes under sparsity, why complex models are not a substitute for this baseline study, and the paper's comparative scope.
-\textit{(Sec.~3.2)} \\
+\textit{(Section~3.2 --- Problem Formulation)} \\
 \midrule
 10. Provide theoretical time-complexity for each method.
 &
 We thank the reviewer. Asymptotic complexities for MF/MFB/NMF/SVD/DMF (and GNN) are reported and compared.
-\textit{(Sec.~3.5)} \\
+\textit{(Section~3.5 --- Conceptual comparison and computational complexity)} \\
 \midrule
 11. Show hyperparameter sensitivity ($d,\lambda,\eta,\gamma$).
 &
 We appreciate this suggestion. Sensitivity results for $\gamma$ and $d$ (and related settings) are reported; chosen values are justified around stable regions.
-\textit{(Sec.~4.12)} \\
+\textit{(Section~4.12 --- Hyperparameter sensitivity)} \\
 \midrule
 12. Detail DMF architecture (layers, activation, regularization).
 &
 We thank the reviewer. DMF\_CDRS is specified as a shallow GMF-style interaction (Hadamard + linear) with regularization details for fair matched comparison.
-\textit{(Sec.~3.3.5; Sec.~4.3)} \\
+\textit{(Section~3.3.5 --- DMF\_CDRS; Section~4.3 --- Implementation Details)} \\
 \midrule
 13. Add formal Algorithm / pseudocode blocks for all methods.
 &
 We appreciate this request. Algorithms for MF, MFB, NMF, SVD, DMF, and GNN\_CDRS training/transfer are included.
-\textit{(Sec.~3.4)} \\
+\textit{(Section~3.4 --- Training procedures (pseudocode))} \\
 \midrule
 14. Justify studying only the user-overlap scenario.
 &
 We thank the reviewer. User-overlap is justified as the most practical Amazon co-purchase setting; item-/no-overlap are acknowledged as limitations / future work.
-\textit{(Sec.~3.2; Sec.~4.2; Sec.~5)} \\
+\textit{(Section~3.2 --- Problem Formulation; Section~4.2 --- Data pre-processing; Section~5 --- Conclusions and Future Works)} \\
 \midrule
 15. Compare against at least one stronger / complex CDRS baseline on the same splits.
 &
 We appreciate this important suggestion. A matched LightGCN-style GNN\_CDRS baseline is added on the same Amazon/$ML_1$ protocol.
-\textit{(Sec.~3.4.1; Sec.~4.7)} \\
+\textit{(Section~3.4.1 --- GNN\_CDRS; Section~4.7 --- Result Analysis and Discussion)} \\
 \midrule
 16. Report wall-clock runtime / scalability evidence.
 &
 We thank the reviewer. Wall-clock runtimes on a representative pair ($CX_1$) are reported alongside complexity.
-\textit{(Sec.~4.4)} \\
+\textit{(Section~4.4 --- Runtime comparison)} \\
 \midrule
 17. Specify hardware/software stack and random seeds.
 &
 We appreciate this comment. Colab CPU/High-RAM environment, key library versions, and seed settings are documented.
-\textit{(Sec.~4.3)} \\
+\textit{(Section~4.3 --- Implementation Details)} \\
 \midrule
 18. Add a conceptual comparison of what each method transfers.
 &
 We thank the reviewer. A transfer-comparison table covers knowledge type, optimization, constraints, complexity, and interpretability.
-\textit{(Sec.~3.5)} \\
+\textit{(Section~3.5 --- Conceptual comparison and computational complexity)} \\
 \midrule
 19. Justify $E{=}20$ with a convergence study/figure.
 &
 We appreciate this suggestion. A convergence figure/study supports the matched iteration budget; under-training risk for slower methods is acknowledged.
-\textit{(Sec.~4.5)} \\
+\textit{(Section~4.5 --- Experiment Parameter Settings and Protocols)} \\
 \midrule
 20. Make future work concrete; ground it in stated limitations.
 &
 We thank the reviewer. Future work now lists concrete steps: ranking metrics; LightGCN$+$bias; LLM no-overlap; federated transfer; denser/implicit data; Amazon-only / fixed-$d$ limits.
-\textit{(Sec.~5)} \\
+\textit{(Section~5 --- Conclusions and Future Works)} \\
 \midrule
 21. Correct Amazon dataset citation (He \& McAuley 2016 / McAuley \& Leskovec).
 &
 We appreciate this correction. The dataset citation is corrected/supplemented to He \& McAuley (2016).
-\textit{(Sec.~4.1)} \\
+\textit{(Section~4.1 --- Datasets)} \\
 \midrule
 22. Improve readability of Figs.~7--8 (fonts, legends, size).
 &
 We thank the reviewer. Figure fonts/legends and layout were enlarged for readability.
-\textit{(Figs.~7--8; Sec.~4.7)} \\
+\textit{(Figs.~7--8 (Section~4.7 --- Result Analysis and Discussion); Section~4.7 --- Result Analysis and Discussion)} \\
 \midrule
 23. Cite the additional suggested references (incl.\ DisenCDR, Zhang survey, Fern\'andez-Tob\'ias, Shu TKDE 2018, Briels 2024) where justifiable.
 &
 We appreciate these reference suggestions. \textbf{All suggested papers have been added and cited} in the revised manuscript: He \& McAuley (2016); Cao et al.\ (DisenCDR, 2022); Zhang et al.\ (CSUR 2021); Fern\'andez-Tob\'ias et al.\ (2012); Shu et al.\ (TKDE 2018); and Briels et al.\ (2024). They are used for dataset attribution, CDRS survey/method positioning, cross-platform identity linkage, and the requested reproducibility note.
-\textit{(Sec.~2; Sec.~4.1; Sec.~4.3; Bibliography)} \\
+\textit{(Section~2 --- Literature Review; Section~4.1 --- Datasets; Section~4.3 --- Implementation Details; Bibliography)} \\
 \bottomrule
 \end{longtable}
 }
@@ -225,27 +225,27 @@ We appreciate these reference suggestions. \textbf{All suggested papers have bee
 1. Novelty missing; motivation unclear; no new concept proposed.
 &
 We appreciate this observation. No new model is proposed; the contribution is reframed as a controlled comparative evaluation of foundational transfer operators under sparsity, with clearer motivation and tempered claims.
-\textit{(Abstract; Sec.~1; Sec.~5)} \\
+\textit{(Abstract; Section~1 --- Introduction; Section~5 --- Conclusions and Future Works)} \\
 \midrule
 2. Only a single dataset family is used.
 &
 We thank the reviewer. Amazon $CX_1$--$CX_6$ remain the primary sparse family; a denser MovieLens-1M $ML_1$ (Action$\to$Adventure) check is added under the same protocol.
-\textit{(Sec.~4.1; Sec.~4.10)} \\
+\textit{(Section~4.1 --- Datasets; Section~4.10 --- Second dataset family: MovieLens $ML_1$)} \\
 \midrule
 3. Amazon is not justified as a benchmark.
 &
 We appreciate this comment. Amazon is justified as a widely used explicit-rating sparse CDRS benchmark (He \& McAuley), suited to stress-testing transfer under extreme sparsity.
-\textit{(Sec.~4.1)} \\
+\textit{(Section~4.1 --- Datasets)} \\
 \midrule
 4. Results weak: no statistical analysis; no component-level measures.
 &
 We thank the reviewer for this important point. Paired $t$-tests / CIs are reported. Component-level cold/mid/warm and rating-bin MAE, plus an MFB bias ablation, are added on $CX_1$.
-\textit{(Sec.~4.14; Sec.~4.9; Sec.~4.8)} \\
+\textit{(Section~4.14 --- Statistical significance; Section~4.9 --- Cold-start user slices and rating-bin errors; Section~4.8 --- Ablation: bias modelling vs.\ bias transfer)} \\
 \midrule
 5. Consider datasets from various domains to enrich evaluation.
 &
 We appreciate this suggestion. $ML_1$ provides a second domain family; broader multi-platform evaluation remains future work and is acknowledged as a limitation.
-\textit{(Sec.~4.1; Sec.~5)} \\
+\textit{(Section~4.1 --- Datasets; Section~5 --- Conclusions and Future Works)} \\
 \bottomrule
 \end{longtable}
 }
@@ -269,27 +269,27 @@ We appreciate this feedback. Introduction, Literature Review, and Method section
 2. Soften ``first'' / novelty claims; state the contribution more precisely.
 &
 We thank the reviewer. Contribution language now emphasizes the controlled sparsity sweep and bias-transfer finding, not primacy claims.
-\textit{(Abstract; Sec.~1; Sec.~5)} \\
+\textit{(Abstract; Section~1 --- Introduction; Section~5 --- Conclusions and Future Works)} \\
 \midrule
 3. Fairness: DMF is shallow; transfer mechanisms differ; show sensitivity; only user-overlap studied.
 &
 We appreciate these methodological points. DMF is explicitly a shallow GMF-style matched baseline. Transfer differences are analyzed conceptually and via MFB ablation. $\gamma$/$d$ sensitivity is shown. User-overlap scope is justified; other overlaps are future work.
-\textit{(Sec.~3.3.5; Sec.~4.8; Sec.~4.12; Sec.~3.2)} \\
+\textit{(Section~3.3.5 --- DMF\_CDRS; Section~4.8 --- Ablation: bias modelling vs.\ bias transfer; Section~4.12 --- Hyperparameter sensitivity; Section~3.2 --- Problem Formulation)} \\
 \midrule
 4. Complete CX4--CX6 tables; add significance tests; runtime; isolate cold-start users/items.
 &
 We thank the reviewer. All six Amazon pairs are fully reported. Paired tests, runtime, and cold/mid/warm MAE on $CX_1$ are added.
-\textit{(Sec.~4.7; Sec.~4.14; Sec.~4.4; Sec.~4.9)} \\
+\textit{(Section~4.7 --- Result Analysis and Discussion; Section~4.14 --- Statistical significance; Section~4.4 --- Runtime comparison; Section~4.9 --- Cold-start user slices and rating-bin errors)} \\
 \midrule
 5. Literature table incomplete; add at least a short comparison vs stronger modern baselines.
 &
 We appreciate this suggestion. The related-work table was cleaned/expanded. Matched GNN\_CDRS contextualizes absolute performance against a stronger baseline class.
-\textit{(Sec.~2; Sec.~3.4.1)} \\
+\textit{(Section~2 --- Literature Review; Section~3.4.1 --- GNN\_CDRS)} \\
 \midrule
 6. Notation table incomplete; improve Fig.~7--8 labels; discuss denser-domain generalization; make future work less generic and link bias-transfer to GNN/LLM directions.
 &
 We thank the reviewer for these helpful minor points. Notation was updated; figure labels improved; denser-domain hypothesis discussed via $ML_1$; future work now gives concrete GNN$+$bias and LLM no-overlap steps.
-\textit{(Sec.~3.1; Figs.~7--8; Sec.~4.1; Sec.~5)} \\
+\textit{(Section~3.1 --- Notations and Preliminaries; Figs.~7--8 (Section~4.7 --- Result Analysis and Discussion); Section~4.1 --- Datasets; Section~5 --- Conclusions and Future Works)} \\
 \bottomrule
 \end{longtable}
 }
@@ -312,47 +312,47 @@ We thank the reviewer for these helpful minor points. Notation was updated; figu
 1. Clarify novelty vs existing CDRS studies; what is new in this systematic evaluation.
 &
 We appreciate this comment. Novelty is stated as a controlled sparsity sweep of foundational transfer operators (not a new architecture), clearly differentiated from complex CDRS papers.
-\textit{(Abstract; Sec.~1; Sec.~4.11)} \\
+\textit{(Abstract; Section~1 --- Introduction; Section~4.11 --- Relation to stronger CDRS systems)} \\
 \midrule
 2. Expand dataset description (users/items/ratings/density) with a detailed table.
 &
 We thank the reviewer. A consolidated statistics table for $CX_1$--$CX_6$ and $ML_1$ is included.
-\textit{(Sec.~4.1)} \\
+\textit{(Section~4.1 --- Datasets)} \\
 \midrule
 3. Justify the minimum-30 filter and discuss its effect on sparsity/characteristics.
 &
 We appreciate this suggestion. The min-30 filter is justified for stable CV splits; resulting denser-than-raw matrices are acknowledged.
-\textit{(Sec.~4.2)} \\
+\textit{(Section~4.2 --- Data pre-processing)} \\
 \midrule
 4. Clarify how 20/40/60/80\% training levels relate to target sparsity / evaluation.
 &
 We thank the reviewer. TR fractions are defined as supervision levels on the filtered target, distinct from catalogue density; their effect on evaluation is clarified.
-\textit{(Sec.~4.5)} \\
+\textit{(Section~4.5 --- Experiment Parameter Settings and Protocols)} \\
 \midrule
 5. Describe hyperparameter selection / sensitivity more clearly.
 &
 We appreciate this request. Selection via sensitivity experiments is described; $\gamma$/$d$ results are shown for reproducibility.
-\textit{(Sec.~4.5; Sec.~4.12)} \\
+\textit{(Section~4.5 --- Experiment Parameter Settings and Protocols; Section~4.12 --- Hyperparameter sensitivity)} \\
 \midrule
 6. Strengthen statistical analysis of method differences.
 &
 We thank the reviewer. Paired $t$-tests and 95\% CIs accompany ranking claims.
-\textit{(Sec.~4.14; Sec.~4.7)} \\
+\textit{(Section~4.14 --- Statistical significance; Section~4.7 --- Result Analysis and Discussion)} \\
 \midrule
 7. Examine why MFB wins; ablate transferred bias terms.
 &
 We appreciate this valuable suggestion. An ablation isolates modelling/transferring biases as the main driver under this protocol.
-\textit{(Sec.~4.8)} \\
+\textit{(Section~4.8 --- Ablation: bias modelling vs.\ bias transfer)} \\
 \midrule
 8. Explain SVD vs MF/MFB differences (initialization vs continuous transfer).
 &
 We thank the reviewer. SVD uses truncated warm-start; MF/MFB use continuous $\gamma$-regularization; this distinction is clarified in methods and discussion.
-\textit{(Sec.~3.3.4; Sec.~4.7; Sec.~3.5)} \\
+\textit{(Section~3.3.4 --- SVD\_CDRS; Section~4.7 --- Result Analysis and Discussion; Section~3.5 --- Conceptual comparison and computational complexity)} \\
 \midrule
 9. Acknowledge Amazon-only / selected-setting limitations and generalization.
 &
 We appreciate this comment. Limitations now state Amazon primary family, single $ML_1$ check, user-overlap only, and matched hyperparameters.
-\textit{(Sec.~5)} \\
+\textit{(Section~5 --- Conclusions and Future Works)} \\
 \midrule
 10. Language editing; reduce repetition; temper unsupported strong claims.
 &
