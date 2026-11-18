@@ -1,114 +1,236 @@
 % Response to Reviewers — MTAP-D-26-00833 (major revision)
-% Compile separately or include as supplementary PDF for submission.
+% Same short Comment|Response table format as ASOC-style response sheets.
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage{times}
 \usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
 \usepackage{hyperref}
 \usepackage{enumitem}
-\setlist{nosep,leftmargin=*}
-\title{Response to Reviewers\\[0.4em]
-\large MTAP-D-26-00833 --- Comparative study of decomposition approaches for cross-domain recommendation}
+\renewcommand{\tabularxcolumn}[1]{p{#1}}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedright\arraybackslash}X}
+
+\title{}
 \author{}
 \date{}
 \begin{document}
-\maketitle
-\noindent\textbf{Important framing.} This manuscript is a \emph{comparative study} of existing decomposition methods (MF, MFB, NMF, DMF, SVD) under matched transfer protocols. It does \emph{not} propose a new recommendation model.
 
-\section*{General reply to the Editor and Reviewers}
-We thank the Editor and Reviewers for the careful and constructive comments. In this revision we have:
-\begin{enumerate}
-  \item Clarified the contribution as a controlled comparative evaluation (not a new architecture).
-  \item Strengthened experiments under a \emph{rating-prediction} protocol: global-mean ($\mu$) baseline; paired significance tests; runtime; $\gamma$/$d$ sensitivity; convergence figure (600\,DPI); bias ablation; cold-start and rating-bin analyses. Ranking metrics are deferred to future work.
-  \item Improved method documentation: taxonomy; family pros/cons; pseudocode; complexity; DMF attribution; hardware/seeds; fair-protocol caveats.
-\end{enumerate}
-Changes are summarized below by reviewer. New figures created for this revision use 600\,DPI.
+\begin{center}
+{\Large\bfseries Response to Reviewers}\\[0.6em]
+Manuscript ID: MTAP-D-26-00833\\
+Title: Decomposition Approaches for Cross-Domain Recommendation Systems\\
+Journal: Multimedia Tools and Applications
+\end{center}
 
-\section{Reviewer 1}
-\paragraph{Comment (baseline / rating scale).}
-A trivial baseline and an explicit rating-scale statement were requested.
-\paragraph{Response.}
-All ratings are on a $1$--$5$ scale. We added a global-mean ($\mu$-only) baseline under the same 5-fold protocol and discuss how much of each method's error is explained by the skewed rating mean.
-
-\paragraph{Comment (ranking metric).}
-At least one ranking metric (e.g., NDCG/Recall) was requested.
-\paragraph{Response.}
-The present revision keeps the study scope as a \emph{comparative rating-prediction} evaluation (MAE/RMSE), which matches the original experimental design of the five decompositions. A full ranking protocol---Precision@$K$, Recall@$K$, F1, NDCG@$K$, AUC/HR, and related top-$N$ measures---is explicitly listed as \textbf{future work} and will be addressed when the same methods are evaluated under ranking losses / ranking metrics. We prefer not to mix a partial ranking add-on with the matched prediction protocol in this revision.
-
-\paragraph{Comment (runtime).}
-Training-time comparisons were requested.
-\paragraph{Response.}
-We added a wall-clock runtime table on $CX_1$ (TR\,$=$\,20\%, $E=20$) for MF, MFB, NMF, SVD, and DMF, together with asymptotic complexity in the method-comparison table. MFB costs only modestly more than MF among SGD methods.
-
-\paragraph{Comment (fairness of DMF/NMF conclusions; density rule).}
-Claims that non-linear/constrained methods are intrinsically weaker, and the ``MFB below 1\% density'' rule, needed softening.
-\paragraph{Response.}
-We explicitly state that the shared $E=20$ budget may under-train slower methods; comparisons are under a matched protocol. The density crossover is marked as a \emph{hypothesis}, because all six targets already lie below 1\% density.
-
-\paragraph{Comment (modern CDRS / GNN future work).}
-Situate results relative to stronger CDRS systems; anchor GNN future work.
-\paragraph{Response.}
-We added a short situating subsection: this paper does not claim to beat graph/adversarial/sequential/contrastive SOTA on their native benchmarks; MFB is the strongest \emph{among the compared foundations}. We cite Meng et al.\ (Applied Soft Computing, 2025) as a modern contrastive CF reference point. The Conclusions/Future Work section now gives concrete next steps (ranking protocol details; LightGCN/hypergraph$+$MFB bias co-training questions; LLM embeddings for no-overlap; FedAvg-style federated transfer; denser/implicit data and method-specific $d$/$E$), anchored to Shu et al.\ (IEEE Access, 2024) where relevant.
-
-\paragraph{Comment (overlap scenario).}
-Only user-overlap is studied.
-\paragraph{Response.}
-We state this scope explicitly and leave item-overlap and no-overlap to future work.
-
-\section{Reviewer 3}
-\paragraph{Comment (Abstract / Intro completeness).}
-SOTA sentence, quantitative result, domain examples, and precise problem scope were requested.
-\paragraph{Response.}
-The abstract now contrasts complex CDRS SOTA with under-studied foundations and reports quantitative MAE ranges. The introduction adds domain impact statistics, e-commerce/entertainment/social examples, and a precise problem statement (failure modes, why backbone comparison matters, scope).
-
-\paragraph{Comment (Literature).}
-Expand Table~1; taxonomy; family advantages/limitations; negative transfer; Amazon citation; additional suggested references.
-\paragraph{Response.}
-Related-work table expanded (year, model, datasets, overlap, metrics). We added a textual five-family taxonomy, a family pros/cons table, negative-transfer discussion with citations, and cite He \& McAuley (2016) for the Amazon resource. We also incorporated all additional suggested references from the review: Cao et al.\ DisenCDR (SIGIR 2022), Zhang et al.\ transferability survey (ACM CSUR 2021), Fern\'andez-Tob\'ias et al.\ (HetRec 2012), Shu et al.\ cross-platform user identification (IEEE TKDE 2018), and Briels et al.\ (Alzheimer's Research \& Therapy, 2024) on experimental reproducibility.
-
-\paragraph{Comment (Method completeness).}
-Pseudocode, complexity, conceptual comparison, DMF detail.
-\paragraph{Response.}
-Algorithms for all five adaptations (plus GNN\_CDRS), an $O(\cdot)$ complexity discussion, a ``what is transferred'' comparison table, and corrected DMF attribution (Xue/GMF; Camilli \& M\'ezard distinguished as a separate theoretical line) are included.
-
-\paragraph{Comment (Sensitivity, convergence, environment, significance).}
-Show hyperparameter sensitivity; justify 20 epochs; report hardware/seeds; statistical tests.
-\paragraph{Response.}
-We added a $\gamma$/$d$ sensitivity table on $CX_1$; a convergence figure (600\,DPI) showing flattening near $E=20$; Colab CPU High-RAM and seed $42$; and paired $t$-tests (MFB vs alternatives on $CX_1$; MFB vs DMF on all six pairs).
-
-\section{Reviewer 4}
-\paragraph{Comment (Novelty / English / presentation).}
-Soften ``first'' claims; improve English; presentation.
-\paragraph{Response.}
-Contribution language emphasizes a controlled comparative sparsity sweep. We revised framing away from ``proposed model'' wording, clarified figure captions, and polished conclusions/limitations.
-
-\paragraph{Comment (Amazon benchmark; component-level measures).}
-Justify Amazon; add component-level analysis beyond overall MAE/RMSE.
-\paragraph{Response.}
-Amazon category pairs are justified in the Datasets section as a standard explicit-rating, user-overlap, sparse-target CDRS benchmark (with citations). We additionally added a denser MovieLens-1M $ML_1$ (Action$\to$Adventure) check and a matched LightGCN-style GNN\_CDRS baseline on all six Amazon pairs and $ML_1$. MFB remains best; GNN improves on DMF but does not overtake MFB under the shared rating-prediction protocol. We also added cold/mid/warm user-activity slices and rating-bin (1--2 / 3 / 4--5) MAE on $CX_1$. The density crossover is stated as a hypothesis (all Amazon targets already $<1\%$); DMF is attributed to Xue/GMF rather than Camilli \& M\'ezard.
-
-\section{Reviewer 5 / detailed experimental notes}
-\paragraph{Comment (Density, TR fractions, min-30 filter, denser domains).}
-\paragraph{Response.}
-We clarified that 20/40/60/80\% are fractions of target training ratings (supervision level), not changes to catalogue density; justified the min-30 filter; and discussed generalization to denser domains as an open hypothesis.
-
-\paragraph{Comment (SVD vs MF/MFB transfer; ablation).}
-\paragraph{Response.}
-SVD uses truncated warm-start initialization; MF/MFB use continuous $\gamma$-regularization. The bias ablation contrasts MF (no biases), MFB with factor-only transfer, and full MFB: gains are driven mainly by \emph{modelling} biases under this protocol.
-
-\paragraph{Comment (Tables CX4--CX6).}
-\paragraph{Response.}
-Full MAE/RMSE tables for $CX_1$--$CX_6$ are present with consistent formatting and confidence intervals.
-
-\section*{Honest remaining limitations}
-\begin{itemize}
-  \item Second dataset family is a single MovieLens genre pair ($ML_1$).
-  \item GNN\_CDRS is a matched LightGCN-style baseline (not a 2024--2025 adversarial multi-graph SOTA).
-  \item Ranking metrics (Precision/Recall/F1/NDCG/AUC, etc.) deferred to future work; current scope is rating prediction only.
-  \item Convergence figure focuses on MF vs MFB at the shared budget.
-\end{itemize}
+\vspace{0.8em}
+\noindent Dear Editor,\\[0.4em]
+Thank you for the reviews. Every comment is answered in the tables below. The location of each change in the revised manuscript is given in brackets.\\[0.6em]
+Sincerely,\\
+Vibhor Kant\\
+Corresponding Author
 
 \vspace{1em}
+\noindent\textbf{Important framing.} This manuscript is a \emph{comparative study} of existing decomposition methods (MF, MFB, NMF, DMF, SVD, plus a matched LightGCN-style GNN baseline). It does \emph{not} propose a new recommendation model.
+
+%% ---------- Reviewer 1 ----------
+\section*{Reviewer 1}
+{\small
+\begin{longtable}{@{}p{0.38\textwidth}p{0.58\textwidth}@{}}
+\toprule
+\textbf{Comment} & \textbf{Response} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Comment} & \textbf{Response} \\
+\midrule
+\endhead
+1. Add a trivial baseline and state the rating scale. &
+Thank you. All ratings are on a $1$--$5$ scale. A global-mean ($\mu$) baseline is added under the same 5-fold protocol.\\
+\textit{(Section 4.5 --- Evaluation Metrics; Table~$\mu$ baseline)} \\
+\midrule
+2. Add at least one ranking metric (e.g., NDCG/Recall). &
+Thank you. The present revision keeps a matched rating-prediction scope (MAE/RMSE). Ranking metrics are listed as future work.\\
+\textit{(Section 4.5; Conclusions and Future Works)} \\
+\midrule
+3. Report training-time / runtime comparisons. &
+Thank you. Wall-clock runtime on $CX_1$ and asymptotic complexity are reported.\\
+\textit{(Section 4.4 --- Runtime comparison; Table method comparison)} \\
+\midrule
+4. Soften claims that DMF/NMF are intrinsically weaker; density ``$<$1\%'' rule. &
+We agree. Comparisons are under a matched $E{=}20$ protocol that may under-train slower methods. The density crossover is stated as a hypothesis.\\
+\textit{(Section 4.4; Datasets discussion; Conclusions)} \\
+\midrule
+5. Situate vs stronger CDRS; anchor GNN future work (e.g., Shu et al., IEEE Access 2024); discuss Meng et al.\ (ASOC 2025). &
+Thank you. A situating subsection and Meng citation are added. Future work cites Shu et al.\ (2024) and gives concrete next steps.\\
+\textit{(Section 4 --- Relation to stronger CDRS systems; Conclusions)} \\
+\midrule
+6. Only user-overlap is studied. &
+Thank you. User-overlap is stated as the scope; item-overlap and no-overlap are future work.\\
+\textit{(Problem Formulation; Data pre-processing; Conclusions)} \\
+\midrule
+7. Fix DMF attribution (Xue / He GMF, not Camilli). &
+Thank you. DMF is attributed to Xue/GMF; Camilli \& M\'ezard is distinguished as a separate theoretical line.\\
+\textit{(Literature Review; Section 3.3.5 DMF\_CDRS)} \\
+\bottomrule
+\end{longtable}
+}
+
+%% ---------- Reviewer 3 ----------
+\section*{Reviewer 3}
+{\small
+\begin{longtable}{@{}p{0.38\textwidth}p{0.58\textwidth}@{}}
+\toprule
+\textbf{Comment} & \textbf{Response} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Comment} & \textbf{Response} \\
+\midrule
+\endhead
+1. Abstract/Intro need SOTA contrast, quantitative result, domain examples, precise problem scope. &
+Thank you. The abstract and introduction now include these elements.\\
+\textit{(Abstract; Section 1 --- Introduction)} \\
+\midrule
+2. Expand related-work table; taxonomy; family pros/cons; negative transfer; correct Amazon citation. &
+Thank you. The related-work table, family comparison, negative-transfer discussion, and He \& McAuley (2016) citation are added.\\
+\textit{(Section 2 --- Literature Review; Datasets)} \\
+\midrule
+3. Cite the additional suggested references. &
+Thank you. All suggested papers are cited (DisenCDR; Zhang transferability survey; Fern\'andez-Tob\'ias et al.; Shu et al.\ TKDE 2018; Briels et al.\ 2024).\\
+\textit{(Section 2; Implementation Details)} \\
+\midrule
+4. Add pseudocode, complexity, conceptual comparison, and DMF architecture detail. &
+Thank you. Algorithms for all methods (plus GNN), complexity, a transfer-comparison table, and DMF detail are included.\\
+\textit{(Section 3 --- Methodological Framework)} \\
+\midrule
+5. Show hyperparameter sensitivity; justify $E{=}20$; report hardware/seeds; statistical tests. &
+Thank you. A $\gamma$/$d$ sensitivity table, convergence figure, Colab/seed details, and paired $t$-tests are added.\\
+\textit{(Sections 4.4--4.5; Sensitivity; Statistical significance)} \\
+\midrule
+6. Compare with at least one stronger/complex baseline; report runtime. &
+Thank you. A matched LightGCN-style GNN\_CDRS baseline and a runtime table are added.\\
+\textit{(GNN\_CDRS; MAE/RMSE tables; Runtime table)} \\
+\midrule
+7. Future work is too generic. &
+Thank you. Future work is rewritten with concrete steps (ranking protocol; LightGCN$+$bias; LLM no-overlap; federated transfer; denser/implicit data).\\
+\textit{(Conclusions and Future Works)} \\
+\bottomrule
+\end{longtable}
+}
+
+%% ---------- Reviewer 4 ----------
+\section*{Reviewer 4}
+{\small
+\begin{longtable}{@{}p{0.38\textwidth}p{0.58\textwidth}@{}}
+\toprule
+\textbf{Comment} & \textbf{Response} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Comment} & \textbf{Response} \\
+\midrule
+\endhead
+1. Soften novelty / ``first'' claims; improve English and presentation. &
+Thank you. Contribution language now emphasizes a controlled comparative evaluation, not a new model.\\
+\textit{(Abstract; Introduction; Conclusions)} \\
+\midrule
+2. Justify Amazon as a benchmark; add component-level measures beyond overall MAE/RMSE. &
+Thank you. Amazon is justified as an explicit-rating sparse CDRS benchmark. Cold/mid/warm and rating-bin MAE are added on $CX_1$.\\
+\textit{(Datasets; Cold-start and rating-bin sections)} \\
+\midrule
+3. Add a second dataset family / broader check. &
+Thank you. A denser MovieLens-1M $ML_1$ (Action$\to$Adventure) check is added under the same protocol.\\
+\textit{(Datasets; Second dataset family: MovieLens $ML_1$)} \\
+\bottomrule
+\end{longtable}
+}
+
+%% ---------- Reviewer 5 ----------
+\section*{Reviewer 5}
+{\small
+\begin{longtable}{@{}p{0.38\textwidth}p{0.58\textwidth}@{}}
+\toprule
+\textbf{Comment} & \textbf{Response} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Comment} & \textbf{Response} \\
+\midrule
+\endhead
+1. Soften strong novelty claims; clarify DMF limitations. &
+Thank you. Framing is comparative; DMF is described as a shallow GMF-style baseline under a matched budget.\\
+\textit{(Abstract; Introduction; DMF\_CDRS; Conclusions)} \\
+\midrule
+2. Densities are very low; discuss denser domains. &
+Thank you. Generalization to denser domains is discussed as a hypothesis; $ML_1$ provides a denser check.\\
+\textit{(Datasets; MovieLens $ML_1$; Conclusions)} \\
+\midrule
+3. Clarify 20/40/60/80\% training vs actual target sparsity; justify min-30 filter. &
+Thank you. TR fractions are supervision levels, not catalogue density. The min-30 filter is justified for stable CV splits.\\
+\textit{(Data pre-processing; Parameter Settings and Protocols)} \\
+\midrule
+4. Add significance tests for ranking claims. &
+Thank you. Paired $t$-tests on fold-level MAE are reported.\\
+\textit{(Statistical significance table)} \\
+\midrule
+5. Future work is generic; link bias-transfer to GNN/LLM directions. &
+Thank you. Future work now gives concrete GNN$+$bias and LLM no-overlap steps.\\
+\textit{(Conclusions and Future Works)} \\
+\bottomrule
+\end{longtable}
+}
+
+%% ---------- Reviewer 7 ----------
+\section*{Reviewer 7}
+{\small
+\begin{longtable}{@{}p{0.38\textwidth}p{0.58\textwidth}@{}}
+\toprule
+\textbf{Comment} & \textbf{Response} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Comment} & \textbf{Response} \\
+\midrule
+\endhead
+1. Clarify novelty versus existing CDRS studies. &
+Thank you. The contribution is a controlled sparsity sweep of foundational decompositions, not a new architecture.\\
+\textit{(Abstract; Introduction; Relation to stronger CDRS systems)} \\
+\midrule
+2. Expand dataset description (users/items/ratings/density). &
+Thank you. A consolidated dataset-statistics table for $CX_1$--$CX_6$ and $ML_1$ is included.\\
+\textit{(Table dataset statistics)} \\
+\midrule
+3. Justify the minimum-30 filter and discuss its effect. &
+Thank you. The filter is justified for stable splits; denser matrices than raw dumps are acknowledged.\\
+\textit{(Data pre-processing)} \\
+\midrule
+4. Clarify TR percentages versus target sparsity. &
+Thank you. This is clarified in the protocol section.\\
+\textit{(Experiment Parameter Settings and Protocols)} \\
+\midrule
+5. Strengthen statistical analysis. &
+Thank you. Paired $t$-tests and 95\% CIs are reported.\\
+\textit{(Statistical significance; MAE/RMSE tables)} \\
+\midrule
+6. Ablate whether MFB gains come from bias modelling or bias transfer. &
+Thank you. An ablation shows modelling biases is the main driver under this protocol.\\
+\textit{(Ablation: bias modelling vs.\ bias transfer)} \\
+\midrule
+7. Explain SVD vs MF/MFB transfer mechanisms. &
+Thank you. SVD uses truncated warm-start; MF/MFB use continuous $\gamma$-regularization.\\
+\textit{(SVD\_CDRS; Result discussion; Method comparison table)} \\
+\midrule
+8. Acknowledge Amazon-only / selected-setting limitations. &
+Thank you. Limitations now state user-overlap only, Amazon primary family, single $ML_1$ check, and matched hyperparameters.\\
+\textit{(Conclusions and Future Works)} \\
+\bottomrule
+\end{longtable}
+}
+
+\vspace{0.8em}
 \noindent We hope the revised comparative manuscript addresses the reviewers' concerns.
 
 \end{document}
