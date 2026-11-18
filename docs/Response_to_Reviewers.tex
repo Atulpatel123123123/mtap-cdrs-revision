@@ -48,7 +48,7 @@ We explicitly state that the shared $E=20$ budget may under-train slower methods
 \paragraph{Comment (modern CDRS / GNN future work).}
 Situate results relative to stronger CDRS systems; anchor GNN future work.
 \paragraph{Response.}
-We added a short situating subsection: this paper does not claim to beat graph/adversarial/sequential SOTA on their native benchmarks; MFB is the strongest \emph{among the five compared foundations}. Future work cites Shu et al.\ (IEEE Access, 2024) for GNN$+$bias directions.
+We added a short situating subsection: this paper does not claim to beat graph/adversarial/sequential/contrastive SOTA on their native benchmarks; MFB is the strongest \emph{among the compared foundations}. We cite Meng et al.\ (Applied Soft Computing, 2025) as a modern contrastive CF reference point. The Conclusions/Future Work section now gives concrete next steps (ranking protocol details; LightGCN/hypergraph$+$MFB bias co-training questions; LLM embeddings for no-overlap; FedAvg-style federated transfer; denser/implicit data and method-specific $d$/$E$), anchored to Shu et al.\ (IEEE Access, 2024) where relevant.
 
 \paragraph{Comment (overlap scenario).}
 Only user-overlap is studied.
@@ -62,14 +62,14 @@ SOTA sentence, quantitative result, domain examples, and precise problem scope w
 The abstract now contrasts complex CDRS SOTA with under-studied foundations and reports quantitative MAE ranges. The introduction adds domain impact statistics, e-commerce/entertainment/social examples, and a precise problem statement (failure modes, why backbone comparison matters, scope).
 
 \paragraph{Comment (Literature).}
-Expand Table~1; taxonomy; family advantages/limitations; negative transfer; Amazon citation.
+Expand Table~1; taxonomy; family advantages/limitations; negative transfer; Amazon citation; additional suggested references.
 \paragraph{Response.}
-Related-work table expanded (year, model, datasets, overlap, metrics). We added a textual five-family taxonomy, a family pros/cons table, negative-transfer discussion with citations, and cite He \& McAuley (2016) for the Amazon resource.
+Related-work table expanded (year, model, datasets, overlap, metrics). We added a textual five-family taxonomy, a family pros/cons table, negative-transfer discussion with citations, and cite He \& McAuley (2016) for the Amazon resource. We also incorporated all additional suggested references from the review: Cao et al.\ DisenCDR (SIGIR 2022), Zhang et al.\ transferability survey (ACM CSUR 2021), Fern\'andez-Tob\'ias et al.\ (HetRec 2012), Shu et al.\ cross-platform user identification (IEEE TKDE 2018), and Briels et al.\ (Alzheimer's Research \& Therapy, 2024) on experimental reproducibility.
 
 \paragraph{Comment (Method completeness).}
 Pseudocode, complexity, conceptual comparison, DMF detail.
 \paragraph{Response.}
-Algorithms for all five adaptations, an $O(\cdot)$ complexity discussion, a ``what is transferred'' comparison table, and clarified DMF attribution (Xue; GMF-style interaction) are included.
+Algorithms for all five adaptations (plus GNN\_CDRS), an $O(\cdot)$ complexity discussion, a ``what is transferred'' comparison table, and corrected DMF attribution (Xue/GMF; Camilli \& M\'ezard distinguished as a separate theoretical line) are included.
 
 \paragraph{Comment (Sensitivity, convergence, environment, significance).}
 Show hyperparameter sensitivity; justify 20 epochs; report hardware/seeds; statistical tests.
@@ -85,7 +85,7 @@ Contribution language emphasizes a controlled comparative sparsity sweep. We rev
 \paragraph{Comment (Amazon benchmark; component-level measures).}
 Justify Amazon; add component-level analysis beyond overall MAE/RMSE.
 \paragraph{Response.}
-Amazon category pairs are justified as a standard explicit-rating CDRS benchmark. We additionally added a denser MovieLens-1M family (Action$\to$Adventure tabulated with classical methods; three further genre pairs for GNN\_CDRS) and a matched LightGCN-style GNN\_CDRS baseline on all six Amazon pairs. MFB remains best; GNN improves on DMF but does not overtake MFB under the shared rating-prediction protocol. We also added cold/mid/warm user-activity slices and rating-bin (1--2 / 3 / 4--5) MAE on $CX_1$.
+Amazon category pairs are justified in the Datasets section as a standard explicit-rating, user-overlap, sparse-target CDRS benchmark (with citations). We additionally added a denser MovieLens-1M $ML_1$ (Action$\to$Adventure) check and a matched LightGCN-style GNN\_CDRS baseline on all six Amazon pairs and $ML_1$. MFB remains best; GNN improves on DMF but does not overtake MFB under the shared rating-prediction protocol. We also added cold/mid/warm user-activity slices and rating-bin (1--2 / 3 / 4--5) MAE on $CX_1$. The density crossover is stated as a hypothesis (all Amazon targets already $<1\%$); DMF is attributed to Xue/GMF rather than Camilli \& M\'ezard.
 
 \section{Reviewer 5 / detailed experimental notes}
 \paragraph{Comment (Density, TR fractions, min-30 filter, denser domains).}
@@ -102,7 +102,7 @@ Full MAE/RMSE tables for $CX_1$--$CX_6$ are present with consistent formatting a
 
 \section*{Honest remaining limitations}
 \begin{itemize}
-  \item Classical methods on MovieLens are fully tabulated for $ML_1$; additional ML pairs report GNN\_CDRS.
+  \item Second dataset family is a single MovieLens genre pair ($ML_1$).
   \item GNN\_CDRS is a matched LightGCN-style baseline (not a 2024--2025 adversarial multi-graph SOTA).
   \item Ranking metrics (Precision/Recall/F1/NDCG/AUC, etc.) deferred to future work; current scope is rating prediction only.
   \item Convergence figure focuses on MF vs MFB at the shared budget.

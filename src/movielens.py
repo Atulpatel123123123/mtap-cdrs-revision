@@ -11,6 +11,7 @@ import pandas as pd
 # Primary-genre pairs with enough overlapping users (density-ordered inside builder).
 # MovieLens is denser than Amazon — used as a second-family generalization check.
 ML_PAIRS = [
+    ("ML0", "Action", "Adventure"),  # compact second-family pair used in paper
     ("ML1", "Comedy", "Drama"),
     ("ML2", "Action", "Comedy"),
     ("ML3", "Action", "Drama"),
